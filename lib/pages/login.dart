@@ -1,53 +1,52 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 export '';
 
 class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  const Login({
+    super.key,
+  });
 
   @override
   State<Login> createState() => _Login();
 }
 
 class _Login extends State<Login> {
-  int _counter = 0;
+  int time = -1;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _incrementCounter() {
+  late Timer _timer;
+
+  void sendCode() {
+    if (time != -1) return;
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      time = 60;
     });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        time--;
+      });
+      if (time < 0) {
+        _timer.cancel();
+      }
+    });
+  }
+
+  submit() {
+    //导航到新路由
+    // Navigator.push(
+    //   context,
+    //   CupertinoPageRoute(
+    //     builder: (context) => NewRoute(),
+    //   )
+    // );
+    Navigator.pushNamed(context, 'home');
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: Container(
           padding: const EdgeInsets.all(18.0),
           decoration: const BoxDecoration(
@@ -57,10 +56,7 @@ class _Login extends State<Login> {
             children: [
               const Text(
                 '红袖阁',
-                style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               Form(
                 key: _formKey,
@@ -96,14 +92,13 @@ class _Login extends State<Login> {
                                 TextFormField(
                                   style: const TextStyle(color: Colors.white),
                                   decoration: const InputDecoration(
-                                    hintText: 'Enter your email',
-                                    hintStyle: TextStyle(
-                                        color: Color.fromRGBO(64, 69, 82, 1)),
+                                    hintText: '请输入手机号',
+                                    hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
                                     border: InputBorder.none,
                                   ),
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter some text';
+                                      return '请输入手机号';
                                     }
                                     return null;
                                   },
@@ -136,16 +131,18 @@ class _Login extends State<Login> {
                                   child: TextFormField(
                                     style: const TextStyle(color: Colors.white),
                                     decoration: const InputDecoration(
-                                      hintText: 'Enter your email',
-                                      hintStyle: TextStyle(
-                                          color: Color.fromRGBO(64, 69, 82, 1)),
+                                      hintText: '请输入验证码',
+                                      hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
                                       border: InputBorder.none,
                                     ),
                                   ),
                                 ),
-                                const Text(
-                                  '验证码',
-                                  style: TextStyle(color: Colors.white),
+                                InkWell(
+                                  onTap: sendCode,
+                                  child: Text(
+                                    time == -1 ? '获取验证码' : time.toString(),
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
                                 ),
                               ],
                             ),
@@ -153,25 +150,25 @@ class _Login extends State<Login> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          print('123');
-                          //导航到新路由
-                          // Navigator.push(
-                          //   context,
-                          //   CupertinoPageRoute(
-                          //     builder: (context) => NewRoute(),
-                          //   )
-                          // );
-                          Navigator.pushNamed(context, 'login');
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
-                        },
-                        child: const Text('Submit'),
+                    InkWell(
+                      onTap: submit,
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(minWidth: double.infinity),
+                        child: Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(top: 20),
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Text(
+                            "立即登录",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

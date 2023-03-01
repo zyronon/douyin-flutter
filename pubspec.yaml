@@ -98,3 +98,6 @@ flutter:
   assets:
     - images/like-gray-small.png
     - images/like-red-small.png
+    - images/gray-close-full.png
+    - images/9.jpg
+    - images/light-back.png

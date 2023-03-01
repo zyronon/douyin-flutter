@@ -17,8 +17,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        'login': (context) => const Login(title: '123123'),
-        '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page1111'),
+        'login': (context) => const Login(),
+        'home': (context) => const Home(),
+        '/': (context) => const Login(),
       },
     );
   }
