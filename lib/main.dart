@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hope/pages/home.dart';
-import 'package:hope/pages/login.dart';
+import 'package:hope/pages/Home.dart';
+import 'package:hope/pages/Login.dart';
+import 'package:hope/pages/PrivacyPolicy.dart';
+import 'package:hope/pages/ServiceAgreement.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,8 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        'login': (context) => const Login(),
-        'home': (context) => const Home(),
+        'Login': (context) => const Login(),
+        'Home': (context) => const Home(),
+        'ServiceAgreement': (context) => const ServiceAgreement(),
+        'PrivacyPolicy': (context) => const PrivacyPolicy(),
         '/': (context) => const Login(),
       },
     );

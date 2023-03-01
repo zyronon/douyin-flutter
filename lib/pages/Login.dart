@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 export '';
 
@@ -14,9 +15,18 @@ class Login extends StatefulWidget {
 
 class _Login extends State<Login> {
   int time = -1;
+  bool _checkboxSelected = false;
+  final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late Timer _timer;
+
+  @override
+  void dispose() {
+    //用到GestureRecognizer的话一定要调用其dispose方法释放资源
+    _tapGestureRecognizer.dispose();
+    super.dispose();
+  }
 
   void sendCode() {
     if (time != -1) return;
@@ -41,7 +51,7 @@ class _Login extends State<Login> {
     //     builder: (context) => NewRoute(),
     //   )
     // );
-    Navigator.pushNamed(context, 'home');
+    Navigator.pushNamed(context, 'Home');
   }
 
   @override
@@ -147,6 +157,44 @@ class _Login extends State<Login> {
                               ],
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                              value: _checkboxSelected,
+                              activeColor: Colors.red, //选中时的颜色
+                              onChanged: (value) {
+                                setState(() {
+                                  _checkboxSelected = value!;
+                                });
+                              }),
+                          Expanded(
+                            child: Text.rich(
+                              TextSpan(children: [
+                                const TextSpan(text: "我已阅读并同意"),
+                                TextSpan(
+                                    text: "《红袖阁用户服务协议》",
+                                    style: TextStyle(color: Colors.blue),
+                                    recognizer: _tapGestureRecognizer
+                                      ..onTap = () {
+                                        Navigator.pushNamed(context, 'ServiceAgreement');
+                                      }),
+                                const TextSpan(text: "以及"),
+                                TextSpan(
+                                    text: "《隐私政策》",
+                                    style: TextStyle(color: Colors.blue),
+                                    recognizer: _tapGestureRecognizer
+                                      ..onTap = () {
+                                        Navigator.pushNamed(context, 'PrivacyPolicy');
+                                      }),
+                              ]),
+                              softWrap: true,
+                            ),
+                          )
                         ],
                       ),
                     ),
