@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
 
 class _Login extends State<Login> {
   int time = -1;
+  int mainColor = 0xff6759FF;
   bool _checkboxSelected = false;
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -58,29 +59,45 @@ class _Login extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+          margin: const EdgeInsets.only(top: 50),
           padding: const EdgeInsets.all(18.0),
           decoration: const BoxDecoration(
             color: Color.fromRGBO(15, 22, 33, 1),
           ),
           child: Column(
             children: [
-              const Text(
-                '红袖阁',
-                style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold, color: Colors.white),
+              Row(
+                children: [Image.asset("images/light-back.png", width: 25.0)],
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minWidth: double.infinity,
+                ),
+                child: Container(
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Positioned(
+                        top:0,
+                        left: 50,
+                        child: Image.asset("images/login-logo.png", width: 150.0),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(top: 110),
+                        child: const Text(
+                          '红袖阁',
+                          style: TextStyle(
+                              fontSize: 40.0, fontWeight: FontWeight.bold, letterSpacing: 8, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Form(
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    Container(
-                      child: Column(
-                        children: [
-                          // const Image(
-                          //     image: AssetImage("images/like-red-small.png"),
-                          //     width: 100.0),
-                        ],
-                      ),
-                    ),
                     Container(
                       margin: const EdgeInsets.only(top: 10.0),
                       child: Column(
@@ -151,7 +168,7 @@ class _Login extends State<Login> {
                                   onTap: sendCode,
                                   child: Text(
                                     time == -1 ? '获取验证码' : time.toString(),
-                                    style: const TextStyle(color: Colors.blue),
+                                    style: TextStyle(color: Color(mainColor)),
                                   ),
                                 ),
                               ],
@@ -160,67 +177,81 @@ class _Login extends State<Login> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                              value: _checkboxSelected,
-                              activeColor: Colors.red, //选中时的颜色
-                              onChanged: (value) {
-                                setState(() {
-                                  _checkboxSelected = value!;
-                                });
-                              }),
-                          Expanded(
-                            child: Text.rich(
-                              TextSpan(children: [
-                                const TextSpan(text: "我已阅读并同意"),
-                                TextSpan(
-                                    text: "《红袖阁用户服务协议》",
-                                    style: TextStyle(color: Colors.blue),
-                                    recognizer: _tapGestureRecognizer
-                                      ..onTap = () {
-                                        Navigator.pushNamed(context, 'ServiceAgreement');
-                                      }),
-                                const TextSpan(text: "以及"),
-                                TextSpan(
-                                    text: "《隐私政策》",
-                                    style: TextStyle(color: Colors.blue),
-                                    recognizer: _tapGestureRecognizer
-                                      ..onTap = () {
-                                        Navigator.pushNamed(context, 'PrivacyPolicy');
-                                      }),
-                              ]),
-                              softWrap: true,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: submit,
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(minWidth: double.infinity),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(top: 20),
-                          padding: const EdgeInsets.all(12.0),
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Text(
-                            "立即登录",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 10),
+                child: Row(
+                  children: [
+                    Checkbox(
+                        value: _checkboxSelected,
+                        activeColor: Color(mainColor), //选中时的颜色
+                        onChanged: (value) {
+                          setState(() {
+                            _checkboxSelected = value!;
+                          });
+                        }),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(children: [
+                          const TextSpan(text: "我已阅读并同意", style: TextStyle(color: Colors.grey)),
+                          TextSpan(
+                              text: "《红袖阁用户服务协议》",
+                              style: TextStyle(color: Color(mainColor)),
+                              recognizer: _tapGestureRecognizer
+                                ..onTap = () {
+                                  Navigator.pushNamed(context, 'ServiceAgreement');
+                                }),
+                          const TextSpan(text: "以及", style: TextStyle(color: Colors.grey)),
+                          TextSpan(
+                              text: "《隐私政策》",
+                              style: TextStyle(color: Color(mainColor)),
+                              recognizer: _tapGestureRecognizer
+                                ..onTap = () {
+                                  Navigator.pushNamed(context, 'PrivacyPolicy');
+                                }),
+                        ]),
+                        softWrap: true,
                       ),
                     )
                   ],
                 ),
               ),
-              Text("data")
+              InkWell(
+                onTap: submit,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: double.infinity),
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(top: 60),
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      color: Color(mainColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text(
+                      "立即登录",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      child: Text(
+                        "无法获取验证码？",
+                        style: TextStyle(color: Color(mainColor)),
+                      ),
+                      onTap: () => {},
+                    )
+                  ],
+                ),
+              )
             ],
           )),
     );
