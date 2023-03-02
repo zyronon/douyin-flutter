@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:hope/pages/Home.dart';
+import 'package:flutter/services.dart';
+import 'package:hope/pages/Home/index.dart';
 import 'package:hope/pages/Login.dart';
 import 'package:hope/pages/PrivacyPolicy.dart';
 import 'package:hope/pages/ServiceAgreement.dart';
@@ -13,6 +16,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -23,7 +28,7 @@ class MyApp extends StatelessWidget {
         'Home': (context) => const Home(),
         'ServiceAgreement': (context) => const ServiceAgreement(),
         'PrivacyPolicy': (context) => const PrivacyPolicy(),
-        '/': (context) => const Login(),
+        '/': (context) => const Home(),
       },
     );
   }

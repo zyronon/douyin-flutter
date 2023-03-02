@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../utils/ConstVal.dart';
 export '';
 
 class Login extends StatefulWidget {
@@ -15,7 +17,6 @@ class Login extends StatefulWidget {
 
 class _Login extends State<Login> {
   int time = -1;
-  int mainColor = 0xff6759FF;
   bool _checkboxSelected = false;
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
