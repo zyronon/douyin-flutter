@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hope/pages/Me.dart';
 import 'package:hope/utils/ConstVal.dart';
 
 import '../Search.dart';
@@ -52,7 +53,7 @@ class _HomeState extends State<Home> {
     Search(),
     // Page3(),
     Page4(),
-    Page5(),
+    Me(),
   ];
 
   void _onItemTapped(int index) {

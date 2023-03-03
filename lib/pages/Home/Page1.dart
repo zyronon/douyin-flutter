@@ -1,27 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:hope/pages/components/Gang.dart';
+import 'package:hope/pages/components/BaseCard.dart';
+import 'package:hope/pages/components/BaseIcon.dart';
 
-import '../components/MyCard.dart';
-import '../components/MyIcon.dart';
 export '';
-
-class Gang extends StatelessWidget {
-  const Gang({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 8),
-      height: 20,
-      width: 4,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(2),
-      ),
-      child: null,
-    );
-  }
-}
 
 class Page1 extends StatelessWidget {
   const Page1({super.key});
@@ -47,30 +29,33 @@ class Page1 extends StatelessWidget {
                         "您今天要找什么？",
                         style: TextStyle(color: Colors.white, fontSize: 28),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 10.0),
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(24, 32, 46, 1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                decoration: const InputDecoration(
-                                  hintText: '搜索您需要的服务',
-                                  hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
-                                  border: InputBorder.none,
+                      InkWell(
+                        onTap: () => {Navigator.pushNamed(context, 'Search')},
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(24, 32, 46, 1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  style: const TextStyle(color: Colors.white),
+                                  decoration: const InputDecoration(
+                                    hintText: '搜索您需要的服务',
+                                    hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
+                                    border: InputBorder.none,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Image.asset(
-                              "images/like-red-small.png",
-                              width: 30.0,
-                            )
-                          ],
+                              Image.asset(
+                                "images/like-red-small.png",
+                                width: 30.0,
+                              )
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -104,20 +89,23 @@ class Page1 extends StatelessWidget {
                             Gang(),
                             Text("上门服务"),
                           ]),
-                          Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(
-                                color: const Color.fromRGBO(220, 220, 220, 1.0),
-                                borderRadius: BorderRadius.circular(18),
-                                border: Border.all(color: Colors.green)),
-                            child: Row(
-                              children: [
-                                const Text("上门服务"),
-                                Image.asset(
-                                  'images/light-back.png',
-                                  width: 15,
-                                )
-                              ],
+                          InkWell(
+                            onTap: () => {Navigator.pushNamed(context, 'Service')},
+                            child: Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(220, 220, 220, 1.0),
+                                  borderRadius: BorderRadius.circular(18),
+                                  border: Border.all(color: Colors.green)),
+                              child: Row(
+                                children: [
+                                  const Text("上门服务"),
+                                  Image.asset(
+                                    'images/light-back.png',
+                                    width: 15,
+                                  )
+                                ],
+                              ),
                             ),
                           )
                         ],

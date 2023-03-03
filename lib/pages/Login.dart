@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hope/pages/components/BasePage.dart';
+import 'package:hope/pages/components/BaseHeader.dart';
 
 import '../utils/ConstVal.dart';
 export '';
@@ -58,203 +61,194 @@ class _Login extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          margin: const EdgeInsets.only(top: 50),
-          padding: const EdgeInsets.all(18.0),
+    return BasePage(
+        child: Column(children: [
+      const BaseHeader(title: '登录'),
+      Container(
+          padding: EdgeInsets.all(18.w),
           decoration: const BoxDecoration(
             color: Color.fromRGBO(15, 22, 33, 1),
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [Image.asset("images/light-back.png", width: 25.0)],
+          child: Column(children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                minWidth: double.infinity,
               ),
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minWidth: double.infinity,
-                ),
-                child: Container(
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      Positioned(
-                        top:0,
-                        left: 50,
-                        child: Image.asset("images/login-logo.png", width: 150.0),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 110),
-                        child: const Text(
-                          '红袖阁',
-                          style: TextStyle(
-                              fontSize: 40.0, fontWeight: FontWeight.bold, letterSpacing: 8, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
+              child: Container(
+                child: Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Positioned(
+                      top: 0,
+                      left: 50,
+                      child: Image.asset("images/login-logo.png", width: 150.0),
+                    ),
                     Container(
-                      margin: const EdgeInsets.only(top: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            '手机号',
-                            style: TextStyle(color: Colors.white),
+                      margin: const EdgeInsets.only(top: 110),
+                      child: const Text(
+                        '红袖阁',
+                        style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold, letterSpacing: 8, color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(top: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '手机号',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(24, 32, 46, 1),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10.0),
-                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(24, 32, 46, 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              children: [
-                                TextFormField(
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                style: const TextStyle(color: Colors.white),
+                                decoration: const InputDecoration(
+                                  hintText: '请输入手机号',
+                                  hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
+                                  border: InputBorder.none,
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return '请输入手机号';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '验证码',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(24, 32, 46, 1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
                                   style: const TextStyle(color: Colors.white),
                                   decoration: const InputDecoration(
-                                    hintText: '请输入手机号',
+                                    hintText: '请输入验证码',
                                     hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
                                     border: InputBorder.none,
                                   ),
-                                  validator: (String? value) {
-                                    if (value == null || value.isEmpty) {
-                                      return '请输入手机号';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                              InkWell(
+                                onTap: sendCode,
+                                child: Text(
+                                  time == -1 ? '获取验证码' : time.toString(),
+                                  style: TextStyle(color: Color(mainColor)),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            '验证码',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10.0),
-                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(24, 32, 46, 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    style: const TextStyle(color: Colors.white),
-                                    decoration: const InputDecoration(
-                                      hintText: '请输入验证码',
-                                      hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
-                                      border: InputBorder.none,
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: sendCode,
-                                  child: Text(
-                                    time == -1 ? '获取验证码' : time.toString(),
-                                    style: TextStyle(color: Color(mainColor)),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: Row(
-                  children: [
-                    Checkbox(
-                        value: _checkboxSelected,
-                        activeColor: Color(mainColor), //选中时的颜色
-                        onChanged: (value) {
-                          setState(() {
-                            _checkboxSelected = value!;
-                          });
-                        }),
-                    Expanded(
-                      child: Text.rich(
-                        TextSpan(children: [
-                          const TextSpan(text: "我已阅读并同意", style: TextStyle(color: Colors.grey)),
-                          TextSpan(
-                              text: "《红袖阁用户服务协议》",
-                              style: TextStyle(color: Color(mainColor)),
-                              recognizer: _tapGestureRecognizer
-                                ..onTap = () {
-                                  Navigator.pushNamed(context, 'ServiceAgreement');
-                                }),
-                          const TextSpan(text: "以及", style: TextStyle(color: Colors.grey)),
-                          TextSpan(
-                              text: "《隐私政策》",
-                              style: TextStyle(color: Color(mainColor)),
-                              recognizer: _tapGestureRecognizer
-                                ..onTap = () {
-                                  Navigator.pushNamed(context, 'PrivacyPolicy');
-                                }),
-                        ]),
-                        softWrap: true,
-                      ),
-                    )
-                  ],
-                ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: _checkboxSelected,
+                      activeColor: Color(mainColor), //选中时的颜色
+                      onChanged: (value) {
+                        setState(() {
+                          _checkboxSelected = value!;
+                        });
+                      }),
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(children: [
+                        const TextSpan(text: "我已阅读并同意", style: TextStyle(color: Colors.grey)),
+                        TextSpan(
+                            text: "《红袖阁用户服务协议》",
+                            style: TextStyle(color: Color(mainColor)),
+                            recognizer: _tapGestureRecognizer
+                              ..onTap = () {
+                                Navigator.pushNamed(context, 'ServiceAgreement');
+                              }),
+                        const TextSpan(text: "以及", style: TextStyle(color: Colors.grey)),
+                        TextSpan(
+                            text: "《隐私政策》",
+                            style: TextStyle(color: Color(mainColor)),
+                            recognizer: _tapGestureRecognizer
+                              ..onTap = () {
+                                Navigator.pushNamed(context, 'PrivacyPolicy');
+                              }),
+                      ]),
+                      softWrap: true,
+                    ),
+                  )
+                ],
               ),
-              InkWell(
-                onTap: submit,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: double.infinity),
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(top: 60),
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      color: Color(mainColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Text(
-                      "立即登录",
-                      style: TextStyle(color: Colors.grey),
-                    ),
+            ),
+            InkWell(
+              onTap: submit,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minWidth: double.infinity),
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(top: 60),
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: Color(mainColor),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    "立即登录",
+                    style: TextStyle(color: Colors.grey),
                   ),
                 ),
               ),
-              Container(
+            ),
+            Container(
                 margin: const EdgeInsets.only(top: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      child: Text(
-                        "无法获取验证码？",
-                        style: TextStyle(color: Color(mainColor)),
-                      ),
-                      onTap: () => {},
-                    )
-                  ],
-                ),
-              )
-            ],
-          )),
-    );
+                child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  InkWell(
+                    child: Text(
+                      "无法获取验证码？",
+                      style: TextStyle(color: Color(mainColor)),
+                    ),
+                    onTap: () => {},
+                  )
+                ]))
+          ]))
+    ]));
   }
 }

@@ -95,9 +95,9 @@ class _Page2 extends State<Page2> {
                         style: TextStyle(color: Colors.blue, fontSize: 22))
                   ])),
                   Container(
-                    width: 100,
+                    width: 120,
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Color(mainColor),
                       borderRadius: BorderRadius.circular(10),

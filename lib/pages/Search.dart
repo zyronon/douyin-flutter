@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hope/pages/components/BasePage.dart';
 
 import '../utils/ConstVal.dart';
-import 'components/MyHeader.dart';
+import 'components/BaseHeader.dart';
 
 export '';
 
@@ -16,9 +16,10 @@ class Search extends StatefulWidget {
 class _Search extends State<Search> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return BasePage(
+        child: Column(
       children: [
-        MyHeader(title: "搜索"),
+        BaseHeader(title: "搜索"),
         Container(
             decoration: BoxDecoration(border: Border.all(color: Colors.white)),
             padding: pagePadding,
@@ -50,12 +51,45 @@ class _Search extends State<Search> {
                     ],
                   ),
                 ),
-                Row(children: [
-                  Text("data")
-                ],)
+                Padding(
+                  padding: const EdgeInsets.only(top: 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "搜索历史",
+                        style: TextStyle(fontSize: 28, color: Colors.grey),
+                      ),
+                      Image.asset(
+                        "images/like-red-small.png",
+                        width: 30.0,
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(top: 18),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Wrap(
+                        spacing: 8.0, // 主轴(水平)方向间距
+                        runSpacing: 8, // 纵轴（垂直）方向间距
+                        children: [
+                          for (int i = 0; i < 10; i++)
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                              decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(2)),
+                              child: const Text(
+                                '历史记录',
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            )
+                        ],
+                      ),
+                    )),
               ],
             )),
       ],
-    );
+    ));
   }
 }

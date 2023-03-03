@@ -38,6 +38,7 @@ dependencies:
   json_annotation: ^4.8.0
   shared_preferences: ^2.0.17
   video_player: ^2.5.2
+  flutter_screenutil: ^5.6.1
 
 dev_dependencies:
   flutter_test:
