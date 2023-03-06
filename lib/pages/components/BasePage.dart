@@ -22,12 +22,14 @@ class _BasePage extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: DefaultTextStyle(
             style: TextStyle(fontSize: 14.sp, color: Colors.white),
             child: Container(
               padding: EdgeInsets.only(top: stateHeight),
               decoration: const BoxDecoration(
-                color: Color.fromRGBO(15, 22, 33, 1),
+                // color: Color.fromRGBO(15, 22, 33, 1),
+                color: Colors.grey,
               ),
               child: widget.child,
             )));

@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hope/pages/Home/Page3.dart';
 import 'package:hope/pages/Me.dart';
 import 'package:hope/utils/ConstVal.dart';
 
-import '../Search.dart';
 import 'Page1.dart';
 import 'Page2.dart';
+
 export '';
 
 class Home extends StatefulWidget {
@@ -14,24 +16,6 @@ class Home extends StatefulWidget {
 
   @override
   State<Home> createState() => _HomeState();
-}
-
-class Page3 extends StatelessWidget {
-  const Page3({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("page3");
-  }
-}
-
-class Page4 extends StatelessWidget {
-  const Page4({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("Page4");
-  }
 }
 
 class Page5 extends StatelessWidget {
@@ -50,9 +34,9 @@ class _HomeState extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     Page1(),
     Page2(),
-    Search(),
-    // Page3(),
-    Page4(),
+    Page3(),
+    // Page4(),
+    Text("Page4"),
     Me(),
   ];
 
@@ -72,7 +56,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTextStyle(
-          style: const TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Colors.white, fontSize: 14.sp),
           child: ConstrainedBox(
             constraints: const BoxConstraints(
                 minWidth: double.infinity, //宽度尽可能大

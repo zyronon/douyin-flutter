@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/components/BasePage.dart';
 import 'package:hope/pages/components/BaseHeader.dart';
@@ -21,6 +22,8 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
   int time = -1;
   bool _checkboxSelected = false;
+  TextEditingController inputCtrl1 = TextEditingController();
+  TextEditingController inputCtrl2 = TextEditingController();
   final TapGestureRecognizer _tapGestureRecognizer = TapGestureRecognizer();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -30,6 +33,8 @@ class _Login extends State<Login> {
   void dispose() {
     //用到GestureRecognizer的话一定要调用其dispose方法释放资源
     _tapGestureRecognizer.dispose();
+    inputCtrl1.dispose();
+    inputCtrl2.dispose();
     super.dispose();
   }
 
@@ -49,14 +54,30 @@ class _Login extends State<Login> {
   }
 
   submit() {
-    //导航到新路由
-    // Navigator.push(
-    //   context,
-    //   CupertinoPageRoute(
-    //     builder: (context) => NewRoute(),
-    //   )
-    // );
-    Navigator.pushNamed(context, 'Home');
+    if ((_formKey.currentState as FormState).validate()) {
+      print(inputCtrl1.text);
+      print(inputCtrl2.text);
+      showDialog<Dialog>(
+        barrierDismissible: true,
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const <Widget>[
+                CircularProgressIndicator(),
+                SizedBox(height: 15),
+                Text('加载中...'),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+    return;
+    // Navigator.pushNamed(context, 'Home');
   }
 
   @override
@@ -117,6 +138,8 @@ class _Login extends State<Login> {
                           child: Column(
                             children: [
                               TextFormField(
+                                controller: inputCtrl1,
+                                autofocus: true,
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   hintText: '请输入手机号',
@@ -124,7 +147,7 @@ class _Login extends State<Login> {
                                   border: InputBorder.none,
                                 ),
                                 validator: (String? value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null || value.isEmpty || value.trim().isEmpty) {
                                     return '请输入手机号';
                                   }
                                   return null;
@@ -156,12 +179,22 @@ class _Login extends State<Login> {
                             children: [
                               Expanded(
                                 child: TextFormField(
+                                  controller: inputCtrl2,
+                                  keyboardType: TextInputType.number,
+                                  //只允许输入数字
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
                                   style: const TextStyle(color: Colors.white),
                                   decoration: const InputDecoration(
                                     hintText: '请输入验证码',
                                     hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
                                     border: InputBorder.none,
                                   ),
+                                  validator: (String? value) {
+                                    if (value == null || value.isEmpty || value.trim().isEmpty) {
+                                      return '请输入验证码';
+                                    }
+                                    return value.trim().length == 6 ? null : "密码不能少于6位";
+                                  },
                                 ),
                               ),
                               InkWell(
@@ -247,7 +280,7 @@ class _Login extends State<Login> {
                     ),
                     onTap: () => {},
                   )
-                ]))
+                ])),
           ]))
     ]));
   }

@@ -10,6 +10,7 @@ import 'package:hope/pages/PrivacyPolicy.dart';
 import 'package:hope/pages/Search.dart';
 import 'package:hope/pages/Service.dart';
 import 'package:hope/pages/ServiceAgreement.dart';
+import 'package:hope/pages/VideoList.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
               'PrivacyPolicy': (context) => const PrivacyPolicy(),
               'Search': (context) => const Search(),
               'Service': (context) => const Service(),
+              'VideoList': (context) => const VideoList(),
               '/': (context) => const Home(),
             },
           );
