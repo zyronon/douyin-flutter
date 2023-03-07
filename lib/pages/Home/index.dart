@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/Home/Page3.dart';
 import 'package:hope/pages/Me.dart';
+import 'package:hope/pages/SlideItem.dart';
 import 'package:hope/utils/ConstVal.dart';
 
 import 'Page1.dart';
@@ -18,15 +19,6 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class Page5 extends StatelessWidget {
-  const Page5({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("Page5");
-  }
-}
-
 class _HomeState extends State<Home> {
   int _selectedIndex = 2;
   double stateHeight = 0;
@@ -36,7 +28,8 @@ class _HomeState extends State<Home> {
     Page2(),
     Page3(),
     // Page4(),
-    Text("Page4"),
+    SlideItem(),
+    // Text("Page4"),
     Me(),
   ];
 
@@ -63,8 +56,8 @@ class _HomeState extends State<Home> {
                 minHeight: double.infinity),
             child: Container(
               padding: EdgeInsets.only(top: stateHeight),
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(15, 22, 33, 1),
+              decoration: BoxDecoration(
+                color: mainBgColor2,
               ),
               child: _widgetOptions.elementAt(_selectedIndex),
             ),

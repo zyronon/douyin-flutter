@@ -1,16 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/Home/index.dart';
 import 'package:hope/pages/Login.dart';
-import 'package:hope/pages/Me.dart';
 import 'package:hope/pages/PrivacyPolicy.dart';
 import 'package:hope/pages/Search.dart';
 import 'package:hope/pages/Service.dart';
 import 'package:hope/pages/ServiceAgreement.dart';
-import 'package:hope/pages/VideoList.dart';
+import 'package:hope/pages/SlideList.dart';
+import 'package:hope/pages/UserPanel.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -46,8 +44,9 @@ class MyApp extends StatelessWidget {
               'PrivacyPolicy': (context) => const PrivacyPolicy(),
               'Search': (context) => const Search(),
               'Service': (context) => const Service(),
-              'VideoList': (context) => const VideoList(),
-              '/': (context) => const Home(),
+              'SlideList': (context) => const SlideList(),
+              'UserPanel': (context) => const UserPanel(),
+              '/': (context) => const UserPanel(),
             },
           );
         });

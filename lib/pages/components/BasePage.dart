@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hope/utils/ConstVal.dart';
 
 export '';
 
@@ -27,9 +28,9 @@ class _BasePage extends State<BasePage> {
             style: TextStyle(fontSize: 14.sp, color: Colors.white),
             child: Container(
               padding: EdgeInsets.only(top: stateHeight),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 // color: Color.fromRGBO(15, 22, 33, 1),
-                color: Colors.grey,
+                color: mainBgColor2,
               ),
               child: widget.child,
             )));
