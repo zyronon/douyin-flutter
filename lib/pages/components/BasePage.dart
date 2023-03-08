@@ -25,7 +25,7 @@ class _BasePage extends State<BasePage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: DefaultTextStyle(
-            style: TextStyle(fontSize: 14.sp, color: Colors.white),
+            style: TextStyle(fontSize: 14.sp, color: Colors.black),
             child: Container(
               padding: EdgeInsets.only(top: stateHeight),
               decoration: BoxDecoration(

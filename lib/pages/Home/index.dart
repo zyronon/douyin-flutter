@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hope/pages/Home/Me.dart';
 import 'package:hope/pages/Home/Page3.dart';
-import 'package:hope/pages/Me.dart';
 import 'package:hope/pages/SlideItem.dart';
 import 'package:hope/utils/ConstVal.dart';
 
@@ -48,8 +48,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: DefaultTextStyle(
-          style: TextStyle(color: Colors.white, fontSize: 14.sp),
+          style: TextStyle(color: Colors.black, fontSize: 14.sp),
           child: ConstrainedBox(
             constraints: const BoxConstraints(
                 minWidth: double.infinity, //宽度尽可能大
@@ -63,30 +64,30 @@ class _HomeState extends State<Home> {
             ),
           )),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(mainBgColor),
+        backgroundColor: mainBgColor2,
         type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        // showSelectedLabels: false,
+        // showUnselectedLabels: false,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '',
+            label: '首页',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: '',
+            label: '海选',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: '',
+            label: '聊天',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: '',
+            label: '消费',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: '',
+            label: '我的',
           ),
         ],
         currentIndex: _selectedIndex,

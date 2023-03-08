@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/components/Gang.dart';
 import 'package:hope/pages/components/BaseCard.dart';
 import 'package:hope/pages/components/BaseIcon.dart';
@@ -13,21 +14,19 @@ class Page1 extends StatelessWidget {
     return SingleChildScrollView(
         child: Container(
             padding: const EdgeInsets.all(18.0),
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(15, 22, 33, 1),
-            ),
+            decoration: const BoxDecoration(),
             child: Column(
               children: [
-                MyCard(
+                BaseCard(
                   child: Column(
                     children: [
                       Text(
                         "你好 客官",
-                        style: TextStyle(color: Colors.white, fontSize: 28),
+                        style: TextStyle(color: Colors.black, fontSize: 28),
                       ),
                       Text(
                         "您今天要找什么？",
-                        style: TextStyle(color: Colors.white, fontSize: 28),
+                        style: TextStyle(color: Colors.black, fontSize: 28),
                       ),
                       InkWell(
                         onTap: () => {Navigator.pushNamed(context, 'Search')},
@@ -35,21 +34,17 @@ class Page1 extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 10.0),
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(24, 32, 46, 1),
+                            color: Colors.grey,
+                            // color: const Color.fromRGBO(24, 32, 46, 1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
                             children: [
                               Expanded(
-                                child: TextFormField(
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
-                                    hintText: '搜索您需要的服务',
-                                    hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
+                                  child: Padding(
+                                padding: EdgeInsets.fromLTRB(0, 12.w, 0, 12.w),
+                                child: Text("搜索您需要的服务"),
+                              )),
                               Image.asset(
                                 "images/like-red-small.png",
                                 width: 30.0,
@@ -61,16 +56,26 @@ class Page1 extends StatelessWidget {
                     ],
                   ),
                 ),
-                MyCard(
+                BaseCard(
                   child: Flex(
                     direction: Axis.horizontal,
                     children: [
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('1')},
                       ),
-                      MyIcon(
+                      BaseIcon(
+                        title: 'data1',
+                        img: "images/gray-close-full.png",
+                        cb: () => {print('2')},
+                      ),
+                      BaseIcon(
+                        title: 'data1',
+                        img: "images/gray-close-full.png",
+                        cb: () => {print('2')},
+                      ),
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('2')},
@@ -78,7 +83,7 @@ class Page1 extends StatelessWidget {
                     ],
                   ),
                 ),
-                MyCard(
+                BaseCard(
                   child: Flex(
                     direction: Axis.vertical,
                     children: [
@@ -122,7 +127,7 @@ class Page1 extends StatelessWidget {
                                     Stack(
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(12.w),
                                           child: Image.asset(
                                             "images/9.jpg",
                                             width: 150.0,
@@ -157,7 +162,7 @@ class Page1 extends StatelessWidget {
                     ],
                   ),
                 ),
-                MyCard(
+                BaseCard(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

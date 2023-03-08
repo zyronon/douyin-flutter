@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/model/woman.dart';
 import '../../utils/ConstVal.dart';
 
@@ -21,9 +22,12 @@ class _Page2 extends State<Page2> {
 
   card(Woman item) {
     return Container(
-        margin: const EdgeInsets.only(bottom: 18),
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), border: Border.all(color: Color(mainColor))),
+        margin: EdgeInsets.only(bottom: 18.w),
+        padding: EdgeInsets.all(8.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.w),
+          color: Colors.white,
+        ),
         child: Column(
           children: [
             Flex(
@@ -94,19 +98,22 @@ class _Page2 extends State<Page2> {
                         text: item.lowPrice.toString() + '~' + item.highPrice.toString(),
                         style: TextStyle(color: Colors.blue, fontSize: 22))
                   ])),
-                  Container(
-                    width: 120,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Color(mainColor),
-                      borderRadius: BorderRadius.circular(10),
+                  InkWell(
+                    onTap: () => {Navigator.pushNamed(context, 'PlaceOrder')},
+                    child: Container(
+                      width: 120,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Color(mainColor),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Text(
+                        "立即预约",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                    child: const Text(
-                      "立即预约",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ),
+                  )
                 ],
               ),
             )
@@ -133,15 +140,50 @@ class _Page2 extends State<Page2> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 10, right: 10),
-      // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-      child: ListView.builder(
-          padding: const EdgeInsets.all(0),
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return card(list[index]);
-          }),
-    );
+    return Column(children: [
+      Container(
+        padding: EdgeInsets.all(8.w),
+        child: Container(
+          height: 36.w,
+          padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    hintText: '搜索您需要的服务',
+                    hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              Image.asset(
+                "images/like-red-small.png",
+                width: 25.w,
+              )
+            ],
+          ),
+        ),
+      ),
+      SizedBox(
+        //Material设计规范中状态栏、导航栏、ListTile高度分别为24、56、56
+        height: MediaQuery.of(context).size.height - 24 - 56 - 136.w,
+        child: Container(
+          padding: EdgeInsets.all(8.w),
+          // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
+          child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              itemCount: list.length,
+              itemBuilder: (BuildContext context, int index) {
+                return card(list[index]);
+              }),
+        ),
+      ),
+    ]);
   }
 }

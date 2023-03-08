@@ -1,31 +1,28 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:hope/pages/Home/Page3.dart';
 import 'package:hope/pages/components/BaseHeader.dart';
 import 'package:hope/pages/components/BasePage.dart';
 import 'package:hope/pages/components/MySliverAppBar.dart';
 import 'package:hope/pages/components/PreviewCard.dart';
 import 'package:hope/utils/ConstVal.dart';
 
-class UserPanel extends StatefulWidget {
-  const UserPanel({super.key});
+class TestPage extends StatefulWidget {
+  const TestPage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _UserPanelState();
+  State<StatefulWidget> createState() => _TestPageState();
 }
 
-class _UserPanelState extends State<UserPanel> {
+class _TestPageState extends State<TestPage> {
+  List<int> _icons = []; //保存Icon数据
   String url = 'https://picsum.photos/200';
-  final rnd = Random();
-  late List<int> extents = [];
 
   @override
   void initState() {
     super.initState();
     // 初始化数据
-    getData();
+    _retrieveIcons();
   }
 
   @override
@@ -36,6 +33,18 @@ class _UserPanelState extends State<UserPanel> {
         CustomScrollView(
           slivers: <Widget>[
             _buildBanner(),
+            // SliverPersistentHeader(
+            //   pinned: true, //是否固定在顶部
+            //   delegate: _SliverAppBarDelegate2(
+            //       minHeight: 50, //收起的高度
+            //       maxHeight: 280, //展开的最大高度
+            //       child: Container(
+            //         padding: EdgeInsets.only(left: 16),
+            //         color: Colors.pink,
+            //         alignment: Alignment.centerLeft,
+            //         child: Text("浮动", style: TextStyle(fontSize: 18)),
+            //       )),
+            // ),
             _buildStickyBar(),
             _buildList(),
           ],
@@ -115,69 +124,67 @@ class _UserPanelState extends State<UserPanel> {
       // pinned: true, //是否固定在顶部
       pinned: false, //是否固定在顶部
       delegate: _SliverAppBarDelegate(
-          minHeight: 40.w, //收起的高度
-          maxHeight: 40.w, //展开的最大高度
+          minHeight: 50, //收起的高度
+          maxHeight: 50, //展开的最大高度
           child: Container(
-            // color: Colors.grey,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(10.w), topRight: Radius.circular(10.w))),
-              alignment: Alignment.center,
-              child: Text("作品", style: TextStyle(fontSize: 14.sp, color: Colors.black)),
-            ),
+            padding: EdgeInsets.only(left: 16),
+            color: Colors.pink,
+            alignment: Alignment.centerLeft,
+            child: Text("浮动", style: TextStyle(fontSize: 18)),
           )),
     );
   }
 
-  Widget _buildList() {
-    return SliverPadding(
-      padding: EdgeInsets.all(6.w),
-      sliver: SliverGrid.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, //Grid按两列显示
-          mainAxisSpacing: 6.w,
-          crossAxisSpacing: 6.w,
-          childAspectRatio: .6,
-        ),
-        itemCount: extents.length,
-        itemBuilder: (context, index) {
-          if (index == extents.length - 1) {
-            getData();
-          }
-          return PreviewCard(index: index, width: 200, height: 200);
-        },
-      ),
-    );
+  Widget _buildList2() {
+    return SliverList(
+        delegate: SliverChildBuilderDelegate(
+      (context, index) {
+        return Container(
+          height: 50,
+          color: index % 2 == 0 ? Colors.white : Colors.black12,
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: Text("我是第${index}个item"),
+        );
+      },
+      childCount: 30,
+    ));
   }
 
-  Widget _buildList2() {
-    return SliverToBoxAdapter(
-      child: MasonryGridView.count(
-        padding: EdgeInsets.only(left: 4.w, right: 4.w),
-        crossAxisCount: 2,
-        mainAxisSpacing: 4.w,
-        crossAxisSpacing: 4.w,
+  Widget _buildList() {
+    return SliverPadding(
+      padding: const EdgeInsets.all(8.0),
+      sliver: SliverGrid.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, //Grid按两列显示
+          mainAxisSpacing: 10.0,
+          crossAxisSpacing: 10.0,
+          childAspectRatio: .6,
+        ),
+        itemCount: _icons.length,
         itemBuilder: (context, index) {
-          if (index == extents.length - 1) {
-            getData();
-          }
-          final height = extents[index] * 100;
-          return PreviewCard(
-            index: index,
-            width: 100,
-            height: height,
+          // if (index == _icons.length - 1 && _icons.length < 200) {
+          //   _retrieveIcons();
+          // }
+          return PreviewCard(index: index, width: 200, height: 200);
+          return Container(
+            alignment: Alignment.center,
+            color: Colors.cyan[100 * (index % 9)],
+            child: Text("index"),
           );
+          // return Icon(_icons[index]);
         },
-        itemCount: extents.length,
       ),
     );
   }
 
   //模拟异步获取数据
-  void getData() {
+  void _retrieveIcons() {
     Future.delayed(Duration(milliseconds: 200)).then((e) {
       setState(() {
-        extents.addAll(List<int>.generate(10, (int index) => rnd.nextInt(2) + 1));
+        for (int i = 0; i < 10; i++) {
+          _icons.add(i);
+        }
       });
     });
   }

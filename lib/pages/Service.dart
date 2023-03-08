@@ -27,7 +27,7 @@ class _Service extends State<Service> {
         padding: pagePadding,
         child: Column(
           children: [
-            MyCard(
+            BaseCard(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,17 +42,17 @@ class _Service extends State<Service> {
                 Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Flex(direction: Axis.horizontal, children: [
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('1')},
                       ),
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('2')},
                       ),
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('2')},
@@ -61,17 +61,17 @@ class _Service extends State<Service> {
                 Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Flex(direction: Axis.horizontal, children: [
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('1')},
                       ),
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('2')},
                       ),
-                      MyIcon(
+                      BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
                         cb: () => {print('2')},

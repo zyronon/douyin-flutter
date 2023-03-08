@@ -87,22 +87,25 @@ class _SlideItemState extends State<SlideItem> {
                 // decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                 child: Column(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          maxRadius: 18.w,
-                          backgroundImage: NetworkImage(url),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 8.w),
-                          child: Text(
-                            "骗哥们可以骗哥们可以",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 16.sp),
+                    InkWell(
+                      onTap: () => {Navigator.pushNamed(context, 'UserPanel')},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            maxRadius: 18.w,
+                            backgroundImage: NetworkImage(url),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(left: 8.w),
+                            child: Text(
+                              "骗哥们可以骗哥们可以",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 16.sp),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.w),

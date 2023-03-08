@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hope/utils/ConstVal.dart';
 
 export '';
 
@@ -15,10 +16,9 @@ class BaseHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = 40.h;
     return SizedBox(
         width: double.infinity,
-        height: height,
+        height: headerHeight,
         // padding: const EdgeInsets.only(left: 15, right: 15),
         child: Stack(
           alignment: Alignment.center,
@@ -32,7 +32,7 @@ class BaseHeader extends StatelessWidget {
                     InkWell(
                       onTap: () => {Navigator.pop(context)},
                       child: SizedBox(
-                          width: height,
+                          width: headerHeight,
                           child: Center(
                               child: Image.asset(
                             "images/light-back.png",
@@ -51,7 +51,7 @@ class BaseHeader extends StatelessWidget {
                   if (title != null)
                     Text(
                       title!,
-                      style: TextStyle(color: Colors.white, fontSize: 22.sp),
+                      style: TextStyle(color: Colors.black, fontSize: 22.sp),
                     ),
                 ],
               ),

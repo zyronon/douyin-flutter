@@ -3,11 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/Home/index.dart';
 import 'package:hope/pages/Login.dart';
+import 'package:hope/pages/PlaceOrder.dart';
 import 'package:hope/pages/PrivacyPolicy.dart';
 import 'package:hope/pages/Search.dart';
 import 'package:hope/pages/Service.dart';
 import 'package:hope/pages/ServiceAgreement.dart';
 import 'package:hope/pages/SlideList.dart';
+import 'package:hope/pages/Test.dart';
 import 'package:hope/pages/UserPanel.dart';
 
 void main() async {
@@ -46,7 +48,9 @@ class MyApp extends StatelessWidget {
               'Service': (context) => const Service(),
               'SlideList': (context) => const SlideList(),
               'UserPanel': (context) => const UserPanel(),
-              '/': (context) => const UserPanel(),
+              'Test': (context) => const TestPage(),
+              'PlaceOrder': (context) => const PlaceOrder(),
+              '/': (context) => const Home(),
             },
           );
         });
