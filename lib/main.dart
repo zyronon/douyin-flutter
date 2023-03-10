@@ -10,6 +10,7 @@ import 'package:hope/pages/Service.dart';
 import 'package:hope/pages/ServiceAgreement.dart';
 import 'package:hope/pages/SlideList.dart';
 import 'package:hope/pages/Test.dart';
+import 'package:hope/pages/UserList.dart';
 import 'package:hope/pages/UserPanel.dart';
 
 void main() async {
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
               'UserPanel': (context) => const UserPanel(),
               'Test': (context) => const TestPage(),
               'PlaceOrder': (context) => const PlaceOrder(),
+              'UserList': (context) => const UserList(),
               '/': (context) => const Home(),
             },
           );

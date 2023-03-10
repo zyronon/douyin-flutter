@@ -33,10 +33,9 @@ class BaseHeader extends StatelessWidget {
                       onTap: () => {Navigator.pop(context)},
                       child: SizedBox(
                           width: headerHeight,
-                          child: Center(
-                              child: Image.asset(
-                            "images/light-back.png",
-                            width: 15.w,
+                          child: const Center(
+                              child: Icon(
+                            Icons.arrow_back_ios,
                           ))),
                     ),
                     const Text("")

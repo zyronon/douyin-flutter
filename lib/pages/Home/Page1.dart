@@ -120,42 +120,45 @@ class Page1 extends StatelessWidget {
                         child: Row(
                           children: [
                             for (int i = 0; i < (3); i++)
-                              Padding(
-                                padding: EdgeInsets.only(right: 10, top: 10),
-                                child: Column(
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(12.w),
-                                          child: Image.asset(
-                                            "images/9.jpg",
-                                            width: 150.0,
-                                            height: 150.0,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 10.0, left: 10),
-                                          padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                                          decoration: BoxDecoration(
-                                            color: const Color.fromRGBO(222, 82, 82, 1.0),
-                                            borderRadius: BorderRadius.circular(18),
-                                          ),
-                                          child: const Text(
-                                            "10%折扣",
-                                            style: TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(top: 10),
-                                      child: Text("Hello world"),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                             InkWell(
+                               onTap: () => {Navigator.pushNamed(context, 'UserList')},
+                               child:  Padding(
+                                 padding: EdgeInsets.only(right: 10, top: 10),
+                                 child: Column(
+                                   children: [
+                                     Stack(
+                                       children: [
+                                         ClipRRect(
+                                           borderRadius: BorderRadius.circular(12.w),
+                                           child: Image.asset(
+                                             "images/9.jpg",
+                                             width: 150.0,
+                                             height: 150.0,
+                                             fit: BoxFit.cover,
+                                           ),
+                                         ),
+                                         Container(
+                                           margin: const EdgeInsets.only(top: 10.0, left: 10),
+                                           padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                                           decoration: BoxDecoration(
+                                             color: const Color.fromRGBO(222, 82, 82, 1.0),
+                                             borderRadius: BorderRadius.circular(18),
+                                           ),
+                                           child: const Text(
+                                             "10%折扣",
+                                             style: TextStyle(color: Colors.white),
+                                           ),
+                                         ),
+                                       ],
+                                     ),
+                                     const Padding(
+                                       padding: EdgeInsets.only(top: 10),
+                                       child: Text("Hello world"),
+                                     ),
+                                   ],
+                                 ),
+                               ),
+                             ),
                           ],
                         ),
                       )

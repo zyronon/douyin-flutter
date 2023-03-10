@@ -23,7 +23,7 @@ class PreviewCard extends StatelessWidget {
       onTap: () => {Navigator.pushNamed(context, 'SlideList')},
       child: Container(
           clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(4.w)),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.w)),
           child: Column(children: [
             Stack(children: [
               SizedBox(

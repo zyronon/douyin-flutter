@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/Home/Me.dart';
 import 'package:hope/pages/Home/Page3.dart';
+import 'package:hope/pages/Home/Page4.dart';
 import 'package:hope/pages/SlideItem.dart';
 import 'package:hope/utils/ConstVal.dart';
 
@@ -27,8 +28,8 @@ class _HomeState extends State<Home> {
     Page1(),
     Page2(),
     Page3(),
-    // Page4(),
-    SlideItem(),
+    Page4(),
+    // SlideItem(),
     // Text("Page4"),
     Me(),
   ];
