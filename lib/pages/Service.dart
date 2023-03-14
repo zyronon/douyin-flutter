@@ -31,14 +31,7 @@ class _Service extends State<Service> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: const [
-                    Gang(),
-                    Text(
-                      "邀请",
-                    )
-                  ],
-                ),
+                Gang('邀请'),
                 Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Flex(direction: Axis.horizontal, children: [

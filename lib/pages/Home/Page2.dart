@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hope/model/woman.dart';
+import 'package:hope/pages/components/BaseScrollView.dart';
 import 'package:hope/pages/components/PreviewCard.dart';
 
 export '';
@@ -71,11 +72,12 @@ class _Page2 extends State<Page2> {
             ],
           ),
           Expanded(
-              child: TabBarView(
+              child: BaseScrollView(
+                  child: TabBarView(
             children: [
               Icon(Icons.directions_boat),
               MasonryGridView.count(
-                padding: EdgeInsets.only(left: 4.w, right: 4.w),
+                padding: EdgeInsets.all(4.w),
                 crossAxisCount: crossAxisCount,
                 mainAxisSpacing: 4.w,
                 crossAxisSpacing: 4.w,
@@ -94,7 +96,7 @@ class _Page2 extends State<Page2> {
               ),
               Icon(Icons.directions_car),
             ],
-          ))
+          )))
         ],
       ),
     );

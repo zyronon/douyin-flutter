@@ -101,7 +101,7 @@ class _SlideItemState extends State<SlideItem> {
                             child: Text(
                               "骗哥们可以骗哥们可以",
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 16.sp),
+                              style: TextStyle(fontSize: 16.sp,color: Colors.white),
                             ),
                           )
                         ],
@@ -123,6 +123,7 @@ class _SlideItemState extends State<SlideItem> {
                         onExpandedChanged: (value) => setState(() {
                           openDesc = value;
                         }),
+                        style: TextStyle(fontSize: 12.sp,color: Colors.white),
                       ),
                     )
                   ],

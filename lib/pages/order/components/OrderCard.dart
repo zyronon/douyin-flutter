@@ -1,32 +1,27 @@
-import 'dart:io';
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hope/pages/components/BaseHeader.dart';
-import 'package:hope/pages/components/BasePage.dart';
-import 'package:hope/pages/components/BaseScrollView.dart';
 import 'package:hope/utils/ConstVal.dart';
 
 // 应用类
-class Page4 extends StatefulWidget {
-  const Page4({Key? key}) : super(key: key);
+class OrderCard extends StatefulWidget {
+  const OrderCard({Key? key, this.clickCanGoDetail = true}) : super(key: key);
+  final bool? clickCanGoDetail;
 
   @override
-  _Page4 createState() => _Page4();
+  _OrderCard createState() => _OrderCard();
 }
 
-// 应用状态类
-class _Page4 extends State<Page4> {
+class _OrderCard extends State<OrderCard> {
   @override
   void initState() {
-    print('page4-initState');
     super.initState();
   }
 
-  Widget card() {
+  @override
+  Widget build(BuildContext context) {
     Color border = const Color(0xffe1e1e1);
     return InkWell(
-      onTap: () => {Navigator.pushNamed(context, 'OrderDetail')},
+      onTap: () => {if (widget.clickCanGoDetail == true) Navigator.pushNamed(context, 'OrderDetail')},
       child: Container(
           margin: EdgeInsets.only(bottom: 8.w),
           padding: EdgeInsets.only(top: 8.w, bottom: 8.w),
@@ -39,21 +34,24 @@ class _Page4 extends State<Page4> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(3.w),
-                            child: Image.asset(
-                              "images/9.jpg",
-                              width: 25.w,
-                              height: 25.w,
-                              fit: BoxFit.cover,
+                        InkWell(
+                          onTap: () => {Navigator.pushNamed(context, 'UserPanel')},
+                          child: Row(children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(3.w),
+                              child: Image.asset(
+                                "images/9.jpg",
+                                width: 25.w,
+                                height: 25.w,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8.w, right: 4.w), child: Text("data")),
-                          const Icon(
-                            Icons.chevron_right,
-                          ),
-                        ]),
+                            Padding(padding: EdgeInsets.only(left: 8.w, right: 4.w), child: Text("data")),
+                            const Icon(
+                              Icons.chevron_right,
+                            ),
+                          ]),
+                        ),
                         Text(
                           "交易已取消",
                           style: TextStyle(color: Colors.red),
@@ -91,12 +89,18 @@ class _Page4 extends State<Page4> {
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text("中式推拿"),
-                                              Text("x 1"),
+                                              Text("23"),
                                             ],
                                           ),
-                                          Text(
-                                            "服务时间:2023-02-02 19:23:00",
-                                            style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "服务时间:2023-02-02 19:23:00",
+                                                style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                                              ),
+                                              Text("x 1", style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
+                                            ],
                                           ),
                                         ]),
                                         Row(
@@ -139,23 +143,6 @@ class _Page4 extends State<Page4> {
               ),
             ),
           ])),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const BaseHeader(title: '消费', showBack: false),
-        Column(children: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, 'MyOrders');
-            },
-            child: Text('订单'),
-          ),
-        ])
-      ],
     );
   }
 }

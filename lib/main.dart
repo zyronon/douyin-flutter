@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hope/pages/Home/index.dart';
-import 'package:hope/pages/Login.dart';
-import 'package:hope/pages/PlaceOrder.dart';
-import 'package:hope/pages/PrivacyPolicy.dart';
-import 'package:hope/pages/Search.dart';
-import 'package:hope/pages/Service.dart';
-import 'package:hope/pages/ServiceAgreement.dart';
-import 'package:hope/pages/SlideList.dart';
-import 'package:hope/pages/Test.dart';
-import 'package:hope/pages/UserList.dart';
-import 'package:hope/pages/UserPanel.dart';
+import 'pages/Home/index.dart';
+import 'pages/Login.dart';
+import 'pages/order/OrderDetail.dart';
+import 'pages/order/PlaceOrder.dart';
+import 'pages/PrivacyPolicy.dart';
+import 'pages/Search.dart';
+import 'pages/Service.dart';
+import 'pages/ServiceAgreement.dart';
+import 'pages/SlideList.dart';
+import 'pages/Test.dart';
+import 'pages/UserList.dart';
+import 'pages/UserPanel.dart';
+import 'pages/order/MyOrders.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return ScreenUtilInit(
-        designSize: const Size(350, 700),
+        designSize: const Size(375, 750),
         minTextAdapt: true,
         builder: (context, child) {
           return MaterialApp(
@@ -50,7 +52,9 @@ class MyApp extends StatelessWidget {
               'SlideList': (context) => const SlideList(),
               'UserPanel': (context) => const UserPanel(),
               'Test': (context) => const TestPage(),
+              'MyOrders': (context) => const MyOrders(),
               'PlaceOrder': (context) => const PlaceOrder(),
+              'OrderDetail': (context) => const OrderDetail(),
               'UserList': (context) => const UserList(),
               '/': (context) => const Home(),
             },

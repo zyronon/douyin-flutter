@@ -35,13 +35,6 @@ class PreviewCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              Positioned(
-                  right: 10.w,
-                  top: 10.w,
-                  child: Image.asset(
-                    "images/like-red-small.png",
-                    width: 22.w,
-                  ))
             ]),
             Padding(
                 padding: EdgeInsets.all(8.w),
@@ -84,15 +77,16 @@ class PreviewCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Image.asset(
-                              "images/like-red-small.png",
-                              width: 20.0,
+                            Icon(
+                              Icons.favorite_border,
+                              size: 16.w,
+                              color: Colors.grey,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 4.w),
+                              padding: EdgeInsets.only(left: 2.w),
                               child: Text(
                                 "12345",
-                                style: TextStyle(fontSize: 12.sp),
+                                style: TextStyle(fontSize: 12.sp,color: Colors.grey),
                               ),
                             )
                           ],

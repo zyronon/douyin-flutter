@@ -15,7 +15,7 @@ class BaseCard extends StatelessWidget {
     if (title != null) {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
-          padding: EdgeInsets.only(left: 8.w,bottom: 8.w),
+          padding: EdgeInsets.only(left: 8.w, bottom: 8.w),
           child: Text(title!),
         ),
         child
@@ -30,10 +30,7 @@ class BaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(
-          minWidth: double.infinity, //宽度尽可能大
-          minHeight: 50.0 //最小高度为50像素
-          ),
+      constraints: const BoxConstraints(minWidth: double.infinity, minHeight: 50.0),
       margin: const EdgeInsets.only(top: 10.0),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
