@@ -25,24 +25,25 @@ class BaseHeader extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (showBack)
-              Positioned(
-                left: 0,
-                child: InkWell(
-                  onTap: () => {Navigator.pop(context)},
-                  child: SizedBox(
-                    width: headerHeight,
-                    height: headerHeight,
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                        size: 18.w,
+            Visibility(
+                visible: showBack,
+                child: Positioned(
+                  left: 0,
+                  child: InkWell(
+                    onTap: () => {Navigator.pop(context)},
+                    child: SizedBox(
+                      width: headerHeight,
+                      height: headerHeight,
+                      child: Center(
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 18.w,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                )),
             if (title != null)
               Text(
                 title!,

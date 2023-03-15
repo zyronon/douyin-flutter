@@ -13,5 +13,6 @@ double headerHeight = 40.w;
 Color line = const Color(0xfff1f1f1);
 TextStyle titleStyle = TextStyle(fontSize: 16.sp,color: Colors.black);
 TextStyle descStyle = TextStyle(fontSize: 12.sp,color: Colors.grey);
+TextStyle timeStyle = TextStyle(fontSize: 10.sp,color: Colors.grey);
 
 EdgeInsets pagePadding = EdgeInsets.only(left: 8.w, right: 8.w,bottom: 8.w);

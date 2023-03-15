@@ -20,7 +20,9 @@ class PreviewCard extends StatelessWidget {
     // String url = 'https://source.unsplash.com/random/' + width.toString() + 'x' + height.toString();
 
     return InkWell(
-      onTap: () => {Navigator.pushNamed(context, 'SlideList')},
+      onTap: () => {
+        Navigator.pushNamed(context, 'SlideList', arguments: {'id': '123123'})
+      },
       child: Container(
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(4.w)),
@@ -86,7 +88,7 @@ class PreviewCard extends StatelessWidget {
                               padding: EdgeInsets.only(left: 2.w),
                               child: Text(
                                 "12345",
-                                style: TextStyle(fontSize: 12.sp,color: Colors.grey),
+                                style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                               ),
                             )
                           ],

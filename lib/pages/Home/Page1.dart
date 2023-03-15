@@ -6,8 +6,15 @@ import 'package:hope/pages/components/BaseIcon.dart';
 
 export '';
 
-class Page1 extends StatelessWidget {
+class Page1 extends StatefulWidget {
   const Page1({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _Page1State();
+
+}
+
+class _Page1State extends State<Page1> {
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,7 @@ class Page1 extends StatelessWidget {
                         style: TextStyle(color: Colors.black, fontSize: 28),
                       ),
                       InkWell(
-                        onTap: () => {Navigator.pushNamed(context, 'Search')},
+                        onTap: () => {Navigator.pushNamed(context, 'Test')},
                         child: Container(
                           margin: const EdgeInsets.only(top: 10.0),
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -42,9 +49,9 @@ class Page1 extends StatelessWidget {
                             children: [
                               Expanded(
                                   child: Padding(
-                                padding: EdgeInsets.fromLTRB(0, 12.w, 0, 12.w),
-                                child: Text("搜索您需要的服务"),
-                              )),
+                                    padding: EdgeInsets.fromLTRB(0, 12.w, 0, 12.w),
+                                    child: Text("搜索您需要的服务"),
+                                  )),
                               Image.asset(
                                 "images/like-red-small.png",
                                 width: 30.0,
@@ -164,64 +171,64 @@ class Page1 extends StatelessWidget {
                 ),
                 BaseCard(
                     child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gang("邀请"),
-                    Stack(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Image.asset(
-                            'images/9.jpg',
-                            width: 100,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Gang("邀请"),
+                        Stack(
                           children: [
-                            Row(
+                            Positioned(
+                              right: 0,
+                              bottom: 0,
+                              child: Image.asset(
+                                'images/9.jpg',
+                                width: 100,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                  'images/light-back.png',
-                                  width: 10,
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'images/light-back.png',
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      width: 200, //添加这一行
+                                      child: const Text(
+                                        "邀请新用户可永久获得该好友后续消费费用的2%免费消费额度",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Text(
+                                  "已收益1300元",
+                                  style: TextStyle(fontSize: 30),
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  width: 200, //添加这一行
-                                  child: const Text(
-                                    "邀请新用户可永久获得该好友后续消费费用的2%免费消费额度",
-                                  ),
-                                ),
+                                    margin: const EdgeInsets.only(left: 10),
+                                    child: InkWell(
+                                      onTap: () => {print('邀请')},
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "立即邀请",
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Image.asset(
+                                            'images/light-back.png',
+                                            width: 10,
+                                          ),
+                                        ],
+                                      ),
+                                    )),
                               ],
                             ),
-                            const Text(
-                              "已收益1300元",
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                child: InkWell(
-                                  onTap: () => {print('邀请')},
-                                  child: Row(
-                                    children: [
-                                      const Text(
-                                        "立即邀请",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Image.asset(
-                                        'images/light-back.png',
-                                        width: 10,
-                                      ),
-                                    ],
-                                  ),
-                                )),
                           ],
-                        ),
+                        )
                       ],
-                    )
-                  ],
-                ))
+                    ))
               ],
             )));
   }

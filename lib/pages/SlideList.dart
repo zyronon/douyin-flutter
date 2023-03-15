@@ -45,6 +45,8 @@ class _SlideListState extends State<SlideList> {
 
   @override
   Widget build(BuildContext context) {
+    // var args=ModalRoute.of(context)?.settings.arguments;
+    // print(args);
     return BasePage(
         child: PageView(
       controller: _PageController,
