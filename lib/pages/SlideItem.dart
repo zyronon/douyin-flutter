@@ -5,44 +5,115 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/model/video.dart';
 import 'package:hope/pages/components/BaseHeader.dart';
 import 'package:hope/utils/ConstVal.dart';
+import 'package:hope/utils/EventBus.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:math' as math;
 
 export '';
 
 class SlideItem extends StatefulWidget {
-  const SlideItem({Key? key, this.video}) : super(key: key);
+  const SlideItem({Key? key, this.video, required this.index, required this.isPlay}) : super(key: key);
 
   final Video? video;
+  final int index;
+  final bool isPlay;
 
   @override
   _SlideItemState createState() => _SlideItemState();
 }
 
 class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
-  late VideoPlayerController _controller;
+  late VideoPlayerController videoController;
   bool openDesc = false;
   bool showDesc = true;
   GlobalKey<ExpandableTextState> _textKey = GlobalKey();
   bool isLove = true;
   bool isCollect = false;
-  late AnimationController controller;
+  late AnimationController animController;
+  late VideoPlayerValue videoPlayerValue;
+  String url = 'https://picsum.photos/200';
+  double _sliderValue = 0;
+  bool isDragProgress = false;
+  bool isBuffering = false;
 
-  // bool openComment = false;
+  void slideListPageChanged(index) {
+    setState(() {
+      if (index == widget.index) {
+        // print("播放 $index");
+        videoController.play();
+      } else {
+        videoController.seekTo(Duration(seconds: 0));
+        videoController.pause();
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    controller = BottomSheet.createAnimationController(this);
-    controller.duration = Duration(milliseconds: 300);
-    _controller = VideoPlayerController.network('http://douyin.ttentau.top/0.mp4')
+    EventBus.on("slideListPageChanged", slideListPageChanged);
+    animController = BottomSheet.createAnimationController(this);
+    animController.duration = Duration(milliseconds: 300);
+    videoController = VideoPlayerController.network('http://douyin.ttentau.top/0.mp4')
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
+        setState(() {
+          videoPlayerValue = videoController.value;
+          if (widget.isPlay) {
+            videoController.play();
+          }
+        });
       });
+    videoController.setLooping(true);
+    videoController.addListener(() {
+      setState(() {
+        _sliderValue = (videoController.value.position.inSeconds / videoController.value.duration.inSeconds) * 100;
+        isBuffering = videoController.value.isBuffering;
+      });
+    });
   }
 
-  String url = 'https://picsum.photos/200';
+  @override
+  void dispose() {
+    // print("dispose" + widget.index.toString());
+    super.dispose();
+    animController.dispose();
+    videoController.dispose();
+    EventBus.off("slideListPageChanged", slideListPageChanged);
+  }
+
+  Widget loadingIcon() {
+    return Center(
+        child: SizedBox(
+      width: 25.w,
+      height: 25.w,
+      child: CircularProgressIndicator(
+        color: Colors.red,
+        strokeWidth: 2.5.w,
+      ),
+    ));
+  }
+
+  Widget statusIcon() {
+    return videoController.value.isInitialized
+        ? Visibility(
+            visible: !videoController.value.isPlaying,
+            child: Center(
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    videoController.play();
+                  });
+                },
+                child: Icon(
+                  Icons.play_arrow_rounded,
+                  color: Colors.white70,
+                  size: 100.w,
+                ),
+              ),
+            ))
+        : loadingIcon();
+  }
 
   Widget _comments() {
     return Container(
@@ -99,175 +170,176 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                           )),
                       Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                  padding: EdgeInsets.only(bottom: 8.w),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(bottom: 8.w),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                      child: Column(
                                     children: [
-                                      Expanded(
-                                          child: Column(
-                                            children: [
-                                              Text("顺德JacksonGao", style: descStyle),
-                                              Text.rich(TextSpan(children: [
-                                                TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                                TextSpan(text: " 03-02 广东", style: timeStyle),
-                                              ]))
-                                              // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
-                                            ],
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                          )),
-                                      Column(children: [
-                                        Icon(
-                                          Icons.favorite_border_rounded,
-                                          color: Colors.grey,
-                                        ),
-                                        Text(
-                                          "12万",
-                                          style: descStyle,
-                                        )
-                                      ])
+                                      Text("顺德JacksonGao", style: descStyle),
+                                      Text.rich(TextSpan(children: [
+                                        TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                        TextSpan(text: " 03-02 广东", style: timeStyle),
+                                      ]))
+                                      // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
                                     ],
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                   )),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 12.w),
-                                child: Row(
+                                  Column(children: [
+                                    Icon(
+                                      Icons.favorite_border_rounded,
+                                      color: Colors.grey,
+                                    ),
+                                    Text(
+                                      "12万",
+                                      style: descStyle,
+                                    )
+                                  ])
+                                ],
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 12.w),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(right: 6.w),
+                                    child: CircleAvatar(
+                                      maxRadius: 12.w,
+                                      backgroundImage: NetworkImage(url),
+                                    )),
+                                Expanded(
+                                    child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 6.w),
-                                        child: CircleAvatar(
-                                          maxRadius: 12.w,
-                                          backgroundImage: NetworkImage(url),
-                                        )),
                                     Expanded(
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    Text("顺德JacksonGao", style: descStyle),
-                                                    Text.rich(TextSpan(children: [
-                                                      TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                                      TextSpan(text: " 03-02 广东", style: timeStyle),
-                                                    ]))
-                                                    // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
-                                                  ],
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                )),
-                                            Column(children: [
-                                              Icon(
-                                                Icons.favorite_border_rounded,
-                                                color: Colors.grey,
-                                              ),
-                                              Text(
-                                                "12万",
-                                                style: descStyle,
-                                              )
-                                            ])
-                                          ],
-                                        ))
+                                        child: Column(
+                                      children: [
+                                        Text("顺德JacksonGao", style: descStyle),
+                                        Text.rich(TextSpan(children: [
+                                          TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                          TextSpan(text: " 03-02 广东", style: timeStyle),
+                                        ]))
+                                        // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
+                                      ],
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    )),
+                                    Column(children: [
+                                      Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: Colors.grey,
+                                      ),
+                                      Text(
+                                        "12万",
+                                        style: descStyle,
+                                      )
+                                    ])
                                   ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 12.w),
-                                child: Row(
+                                ))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 12.w),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(right: 6.w),
+                                    child: CircleAvatar(
+                                      maxRadius: 12.w,
+                                      backgroundImage: NetworkImage(url),
+                                    )),
+                                Expanded(
+                                    child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 6.w),
-                                        child: CircleAvatar(
-                                          maxRadius: 12.w,
-                                          backgroundImage: NetworkImage(url),
-                                        )),
                                     Expanded(
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    Text("顺德JacksonGao", style: descStyle),
-                                                    Text.rich(TextSpan(children: [
-                                                      TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                                      TextSpan(text: " 03-02 广东", style: timeStyle),
-                                                    ]))
-                                                    // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
-                                                  ],
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                )),
-                                            Column(children: [
-                                              Icon(
-                                                Icons.favorite_border_rounded,
-                                                color: Colors.grey,
-                                              ),
-                                              Text(
-                                                "12万",
-                                                style: descStyle,
-                                              )
-                                            ])
-                                          ],
-                                        ))
+                                        child: Column(
+                                      children: [
+                                        Text("顺德JacksonGao", style: descStyle),
+                                        Text.rich(TextSpan(children: [
+                                          TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                          TextSpan(text: " 03-02 广东", style: timeStyle),
+                                        ]))
+                                        // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
+                                      ],
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    )),
+                                    Column(children: [
+                                      Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: Colors.grey,
+                                      ),
+                                      Text(
+                                        "12万",
+                                        style: descStyle,
+                                      )
+                                    ])
                                   ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 12.w),
-                                child: Row(
+                                ))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 12.w),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(right: 6.w),
+                                    child: CircleAvatar(
+                                      maxRadius: 12.w,
+                                      backgroundImage: NetworkImage(url),
+                                    )),
+                                Expanded(
+                                    child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(right: 6.w),
-                                        child: CircleAvatar(
-                                          maxRadius: 12.w,
-                                          backgroundImage: NetworkImage(url),
-                                        )),
                                     Expanded(
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    Text("顺德JacksonGao", style: descStyle),
-                                                    Text.rich(TextSpan(children: [
-                                                      TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                                      TextSpan(text: " 03-02 广东", style: timeStyle),
-                                                    ]))
-                                                    // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
-                                                  ],
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                )),
-                                            Column(children: [
-                                              Icon(
-                                                Icons.favorite_border_rounded,
-                                                color: Colors.grey,
-                                              ),
-                                              Text(
-                                                "12万",
-                                                style: descStyle,
-                                              )
-                                            ])
-                                          ],
-                                        ))
+                                        child: Column(
+                                      children: [
+                                        Text("顺德JacksonGao", style: descStyle),
+                                        Text.rich(TextSpan(children: [
+                                          TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                          TextSpan(text: " 03-02 广东", style: timeStyle),
+                                        ]))
+                                        // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
+                                      ],
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    )),
+                                    Column(children: [
+                                      Icon(
+                                        Icons.favorite_border_rounded,
+                                        color: Colors.grey,
+                                      ),
+                                      Text(
+                                        "12万",
+                                        style: descStyle,
+                                      )
+                                    ])
                                   ],
-                                ),
+                                ))
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 8.w),
+                              child: Text(
+                                "展开6条回复",
+                                style:
+                                    TextStyle(color: const Color.fromRGBO(35, 85, 155, 1.0), fontWeight: FontWeight.bold, fontSize: 14.sp),
                               ),
-                              InkWell(
-                                child: Padding(
-                                  padding: EdgeInsets.only(bottom: 8.w),
-                                  child: Text(
-                                    "展开6条回复",
-                                    style: TextStyle(color: const Color.fromRGBO(35, 85, 155, 1.0), fontWeight: FontWeight.bold, fontSize: 14.sp),
-                                  ),
-                                ),
-                              ),
-                              Divider(height: 1.0),
-                            ],
-                          ))
+                            ),
+                          ),
+                          Divider(height: 1.0),
+                        ],
+                      ))
                     ],
                   ),
                 );
@@ -301,7 +373,6 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                 Padding(
                   padding: EdgeInsets.only(left: 8.w),
                   child: InkWell(
-                    onTap: openComment,
                     child: Container(
                         decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(18.w))),
                         padding: EdgeInsets.fromLTRB(14.w, 10.w, 14.w, 10.w),
@@ -323,9 +394,59 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       enableDrag: false,
-      transitionAnimationController: controller,
+      transitionAnimationController: animController,
       builder: (BuildContext context) {
         return _comments();
+      },
+    );
+  }
+
+  void quickComment() {
+    showModalBottomSheet(
+      context: context,
+      // backgroundColor: Colors.transparent,
+      enableDrag: false,
+      transitionAnimationController: animController,
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Padding(
+              padding: EdgeInsets.all(14.w),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
+                      decoration: BoxDecoration(color: mainBgColor2, borderRadius: BorderRadius.all(Radius.circular(18.w))),
+                      child: SizedBox(
+                        height: 40.w,
+                        child: const TextField(
+                          autofocus: true,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: '说点什么吧',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8.w),
+                    child: InkWell(
+                      child: Container(
+                          decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(18.w))),
+                          padding: EdgeInsets.fromLTRB(14.w, 10.w, 14.w, 10.w),
+                          child: Text(
+                            "发送",
+                            style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                          )),
+                    ),
+                  )
+                ],
+              )),
+        );
       },
     );
   }
@@ -344,32 +465,19 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                        videoController.value.isPlaying ? videoController.pause() : videoController.play();
                       });
                     },
                     child: Center(
-                      child: _controller.value.isInitialized
+                      child: videoController.value.isInitialized
                           ? AspectRatio(
-                              aspectRatio: _controller.value.aspectRatio,
-                              child: VideoPlayer(_controller),
+                              aspectRatio: videoController.value.aspectRatio,
+                              child: VideoPlayer(videoController),
                             )
                           : Container(),
                     ),
                   ),
-                  _controller.value.isPlaying
-                      ? Container()
-                      : Center(
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                _controller.play();
-                              });
-                            },
-                            child: Icon(
-                              _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                            ),
-                          ),
-                        ),
+                  statusIcon(),
                   const BaseHeader(),
                   Offstage(
                       offstage: !openDesc,
@@ -384,8 +492,9 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                               decoration: BoxDecoration(color: Color.fromRGBO(0, 0, 0, .5)),
                             ),
                           ))),
+                  Visibility(visible: isBuffering, child: loadingIcon()),
                   Positioned(
-                      bottom: 10.w,
+                      bottom: 15.w,
                       left: 0,
                       child: Container(
                         width: 1.sw,
@@ -478,6 +587,57 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                             ),
                           ],
                         ),
+                      )),
+                  Positioned(
+                      bottom: -10.w,
+                      left: 0,
+                      width: 1.sw,
+                      child: SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          //轨道的形状
+                          trackShape: null,
+                          //trackHeight：滑轨的高度
+                          trackHeight: isDragProgress ? 2 : 1,
+                          //已滑过轨道的颜色
+                          activeTrackColor: isDragProgress ? Colors.white : Colors.white30,
+                          //未滑过轨道的颜色
+                          inactiveTrackColor: Colors.white30,
+                          //滑块中心的颜色（小圆头的颜色）
+                          thumbColor: isDragProgress ? Colors.white : Colors.transparent,
+                          //滑块边缘的颜色
+                          overlayColor: Colors.white,
+                          thumbShape: RoundSliderThumbShape(
+                            //可继承SliderComponentShape自定义形状
+                            disabledThumbRadius: 8.w, //禁用时滑块大小
+                            enabledThumbRadius: 4.w, //滑块大小
+                          ),
+                          overlayShape: RoundSliderOverlayShape(
+                            //可继承SliderComponentShape自定义形状
+                            overlayRadius: 14.w, //滑块外圈大小
+                          ),
+                        ),
+                        child: Slider(
+                          value: _sliderValue,
+                          max: 100,
+                          min: 0,
+                          onChanged: (double val) {
+                            setState(() {
+                              int currentTime = (videoPlayerValue.duration.inSeconds * (val / 100)).toInt();
+                              videoController.seekTo(Duration(seconds: currentTime));
+                              _sliderValue = val;
+                            });
+                          },
+                          onChangeStart: (double val) {
+                            setState(() {
+                              isDragProgress = true;
+                            });
+                          },
+                          onChangeEnd: (double val) {
+                            setState(() {
+                              isDragProgress = false;
+                            });
+                          },
+                        ),
                       ))
                 ],
               )),
@@ -486,14 +646,17 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Container(
-                          child: Text(
-                            '发表评论',
-                            style: TextStyle(color: Colors.grey),
+                        child: InkWell(
+                          onTap: quickComment,
+                          child: Container(
+                            child: Text(
+                              '发表评论',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            padding: EdgeInsets.fromLTRB(20.w, 8.w, 20.w, 8.w),
+                            decoration:
+                                BoxDecoration(color: Color.fromRGBO(43, 43, 43, 1), borderRadius: BorderRadius.all(Radius.circular(18.w))),
                           ),
-                          padding: EdgeInsets.fromLTRB(20.w, 8.w, 20.w, 8.w),
-                          decoration:
-                              BoxDecoration(color: Color.fromRGBO(43, 43, 43, 1), borderRadius: BorderRadius.all(Radius.circular(18.w))),
                         ),
                       ),
                       Row(
@@ -565,12 +728,5 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
             ],
           )),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-    _controller.dispose();
   }
 }

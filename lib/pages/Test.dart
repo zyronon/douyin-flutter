@@ -17,6 +17,8 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BasePage(child: SlideItem());
+    return Text("data");
+
+    // return const BasePage(child: SlideItem(index: 1,));
   }
 }
