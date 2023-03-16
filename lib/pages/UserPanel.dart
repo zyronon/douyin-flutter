@@ -157,11 +157,12 @@ class _UserPanelState extends State<UserPanel> {
                             getData();
                           }
                           final height = extents[index] * 100;
-                          return PreviewCard(
-                            index: index,
-                            width: 100,
-                            height: height,
-                          );
+                          return Text("data");
+                          // return PreviewCard(
+                          //   index: index,
+                          //   width: 100,
+                          //   height: height,
+                          // );
                         },
                       ),
                     ],

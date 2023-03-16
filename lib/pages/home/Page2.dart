@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:hope/model/video.dart';
 import 'package:hope/model/woman.dart';
 import 'package:hope/pages/components/BaseScrollView.dart';
 import 'package:hope/pages/components/PreviewCard.dart';
@@ -18,10 +21,8 @@ class Page2 extends StatefulWidget {
 
 class _Page2 extends State<Page2> {
   final rnd = Random();
-  late List<int> extents = [];
+  late List<VideoModel> list = [];
   int crossAxisCount = 2;
-
-  // DefaultTabController _tabController = DefaultTabController(length: 3, child: null,);
 
   @override
   void initState() {
@@ -29,12 +30,17 @@ class _Page2 extends State<Page2> {
     getData();
   }
 
-  getData() {
-    Future.delayed(Duration(milliseconds: 200)).then((e) {
+  getData() async {
+    Dio dio = Dio();
+    var res = await dio.get("http://172.16.1.17:3000/slideList");
+    res.data = jsonDecode(res.data);
+    if (res.data['code'] == 200) {
       setState(() {
-        extents.addAll(List<int>.generate(10, (int index) => rnd.nextInt(2) + 1));
+        list = res.data['data'].asMap().entries.map<VideoModel>((entry) {
+          return VideoModel.fromRawJson(entry.value);
+        }).toList();
       });
-    });
+    }
   }
 
   @override
@@ -82,17 +88,17 @@ class _Page2 extends State<Page2> {
                 mainAxisSpacing: 4.w,
                 crossAxisSpacing: 4.w,
                 itemBuilder: (context, index) {
-                  if (index == extents.length - 1) {
+                  if (index == list.length - 1) {
                     getData();
                   }
-                  final height = extents[index] * 100;
                   return PreviewCard(
                     index: index,
+                    item: list[index],
                     width: 100,
-                    height: height,
+                    height: 300,
                   );
                 },
-                itemCount: extents.length,
+                itemCount: list.length,
               ),
               Icon(Icons.directions_car),
             ],

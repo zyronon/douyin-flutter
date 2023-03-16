@@ -14,7 +14,7 @@ export '';
 class SlideItem extends StatefulWidget {
   const SlideItem({Key? key, this.video, required this.index, required this.isPlay}) : super(key: key);
 
-  final Video? video;
+  final VideoModel? video;
   final int index;
   final bool isPlay;
 

@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-class Video {
-  Video({
+class VideoModel {
+  VideoModel({
     this.id,
     this.video,
     this.videoDataSize,
@@ -67,11 +67,11 @@ class Video {
   final Music? music;
   final Author? author;
 
-  factory Video.fromRawJson(Map<String, dynamic> str) => Video.fromJson(str);
+  factory VideoModel.fromRawJson(Map<String, dynamic> str) => VideoModel.fromJson(str);
 
   String toRawJson() => json.encode(toJson());
 
-  factory Video.fromJson(Map<String, dynamic> json) => Video(
+  factory VideoModel.fromJson(Map<String, dynamic> json) => VideoModel(
         id: json["id"],
         video: json["video"],
         videoDataSize: json["video_data_size"],

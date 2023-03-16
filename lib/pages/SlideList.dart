@@ -34,13 +34,13 @@ class _SlideListState extends State<SlideList> {
 
   getData() async {
     Dio dio = Dio();
-    var res = await dio.get("http://172.16.1.17:3000/");
+    var res = await dio.get("http://172.16.1.17:3000/slideList");
     res.data = jsonDecode(res.data);
     if (res.data['code'] == 200) {
       setState(() {
         list = res.data['data'].asMap().entries.map<Widget>((entry) {
           return SlideItem(
-            video: Video.fromRawJson(entry.value),
+            video: VideoModel.fromRawJson(entry.value),
             index: entry.key,
             isPlay:3 == entry.key
           );
