@@ -13,8 +13,8 @@ class Gang extends StatelessWidget {
     return Row(children: [
       Container(
         margin: EdgeInsets.only(right: 8.w),
-        height: 20.w,
-        width: 4.w,
+        height: 16.w,
+        width: 3.w,
         decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: BorderRadius.circular(2.w),

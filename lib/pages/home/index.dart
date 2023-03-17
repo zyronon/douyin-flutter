@@ -6,6 +6,7 @@ import 'package:hope/pages/Home/Me.dart';
 import 'package:hope/pages/Home/Page3.dart';
 import 'package:hope/pages/Home/Page4.dart';
 import 'package:hope/pages/SlideItem.dart';
+import 'package:hope/pages/components/BaseScrollView.dart';
 import 'package:hope/utils/ConstVal.dart';
 
 import 'Page1.dart';

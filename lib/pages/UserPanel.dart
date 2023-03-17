@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:hope/model/args.dart';
+import 'package:hope/model/video.dart';
 import 'package:hope/pages/components/BaseCard.dart';
 import 'package:hope/pages/components/BasePage.dart';
 import 'package:hope/pages/components/PreviewCard.dart';
@@ -20,7 +25,7 @@ class UserPanel extends StatefulWidget {
 class _UserPanelState extends State<UserPanel> {
   String url = 'https://picsum.photos/200';
   final rnd = Random();
-  late List<int> extents = [];
+  late List<VideoModel> list = [];
 
   @override
   void initState() {
@@ -109,16 +114,19 @@ class _UserPanelState extends State<UserPanel> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   Text.rich(TextSpan(children: [
-                                                    TextSpan(text: "￥", style: TextStyle(color: Colors.red,fontSize: 12.sp)),
-                                                    TextSpan(text: "2336", style: TextStyle(color: Colors.red,fontSize: 20.sp)),
+                                                    TextSpan(text: "￥", style: TextStyle(color: Colors.red, fontSize: 12.sp)),
+                                                    TextSpan(text: "2336", style: TextStyle(color: Colors.red, fontSize: 20.sp)),
                                                   ])),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: border),
-                                                        borderRadius: BorderRadius.all(Radius.circular(4.w))),
-                                                    padding: EdgeInsets.fromLTRB(6.w, 5.w, 6.w, 5.w),
-                                                    child: Text("立即预约"),
-                                                  ),
+                                                  InkWell(
+                                                    onTap: () => {Navigator.pushNamed(context, 'PlaceOrder')},
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(color: border),
+                                                          borderRadius: BorderRadius.all(Radius.circular(4.w))),
+                                                      padding: EdgeInsets.fromLTRB(6.w, 5.w, 6.w, 5.w),
+                                                      child: Text("立即预约"),
+                                                    ),
+                                                  )
                                                 ],
                                               )
                                             ],
@@ -142,7 +150,7 @@ class _UserPanelState extends State<UserPanel> {
                 return Container(
                   padding: EdgeInsets.all(4.w),
                   color: mainBgColor2,
-                  child:  CustomScrollView(
+                  child: CustomScrollView(
                     key: const PageStorageKey<String>('two'),
                     slivers: <Widget>[
                       SliverOverlapInjector(
@@ -152,17 +160,18 @@ class _UserPanelState extends State<UserPanel> {
                         crossAxisCount: 2,
                         mainAxisSpacing: 4.w,
                         crossAxisSpacing: 4.w,
+                        childCount: list.length,
                         itemBuilder: (context, index) {
-                          if (index == extents.length - 1) {
+                          if (index == list.length - 1) {
                             getData();
                           }
-                          final height = extents[index] * 100;
-                          return Text("data");
-                          // return PreviewCard(
-                          //   index: index,
-                          //   width: 100,
-                          //   height: height,
-                          // );
+                          return InkWell(
+                            onTap: () => {Navigator.pushNamed(context, 'SlideList', arguments: SlideListArguments(list, index))},
+                            child: PreviewCard(
+                              index: index,
+                              item: list[index],
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -176,11 +185,23 @@ class _UserPanelState extends State<UserPanel> {
     ));
   }
 
-  //模拟异步获取数据
-  void getData() {
-    Future.delayed(Duration(milliseconds: 200)).then((e) {
+  getData() async {
+    // Dio dio = Dio();
+    // var res = await dio.get("http://172.16.1.17:3000/slideList");
+    // res.data = jsonDecode(res.data);
+    // if (res.data['code'] == 200) {
+    //   setState(() {
+    //     list = res.data['data'].asMap().entries.map<VideoModel>((entry) {
+    //       return VideoModel.fromRawJson(entry.value);
+    //     }).toList();
+    //   });
+    // }
+    rootBundle.loadString('assets/resource.json').then((data) {
+      Map<String, dynamic> map = jsonDecode(data);
       setState(() {
-        extents.addAll(List<int>.generate(10, (int index) => rnd.nextInt(2) + 1));
+        list = map['videos'].asMap().entries.map<VideoModel>((entry) {
+          return VideoModel.fromRawJson(entry.value);
+        }).toList();
       });
     });
   }

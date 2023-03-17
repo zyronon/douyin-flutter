@@ -38,18 +38,18 @@ class _Service extends State<Service> {
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('1')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
-                      )
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
+                      ),
                     ])),
                 Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -57,18 +57,18 @@ class _Service extends State<Service> {
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('1')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
-                      )
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
+                      ),
                     ])),
               ],
             ))

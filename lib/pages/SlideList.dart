@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hope/model/args.dart';
 import 'package:hope/model/video.dart';
 import 'package:hope/pages/SlideItem.dart';
 import 'package:hope/pages/components/BasePage.dart';
@@ -17,18 +19,18 @@ class SlideList extends StatefulWidget {
 }
 
 class _SlideListState extends State<SlideList> {
-  final PageController _PageController = PageController();
+  late PageController _pageController;
   List<Widget> list = <Widget>[];
 
   @override
   void initState() {
     super.initState();
-    getData();
+    // getData();
   }
 
   @override
   void dispose() {
-    _PageController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -39,25 +41,28 @@ class _SlideListState extends State<SlideList> {
     if (res.data['code'] == 200) {
       setState(() {
         list = res.data['data'].asMap().entries.map<Widget>((entry) {
-          return SlideItem(
-            video: VideoModel.fromRawJson(entry.value),
-            index: entry.key,
-            isPlay:3 == entry.key
-          );
+          return SlideItem(videoModel: VideoModel.fromRawJson(entry.value), index: entry.key, isPlay: 3 == entry.key);
         }).toList();
-        _PageController.jumpToPage(3);
+        // _pageController.jumpToPage(3);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // var args=ModalRoute.of(context)?.settings.arguments;
-    // print(args);
+    final args = ModalRoute.of(context)!.settings.arguments as SlideListArguments;
+    // print('${args.list} asdasfd');
+    setState(() {
+      list = args.list.asMap().entries.map<Widget>((entry) {
+        return SlideItem(videoModel: entry.value, index: entry.key, isPlay: args.index == entry.key);
+      }).toList();
+      _pageController = PageController(initialPage: args.index);
+    });
+    // return Text("data");
     return BasePage(
         child: PageView(
       onPageChanged: (v) => {EventBus.emit("slideListPageChanged", v)},
-      controller: _PageController,
+      controller: _pageController,
       scrollDirection: Axis.vertical,
       allowImplicitScrolling: true,
       // scrollDirection: Axis.vertical, // 滑动方向为垂直方向

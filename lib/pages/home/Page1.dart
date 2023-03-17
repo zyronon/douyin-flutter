@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/pages/components/Gang.dart';
 import 'package:hope/pages/components/BaseCard.dart';
 import 'package:hope/pages/components/BaseIcon.dart';
+import 'package:hope/utils/ConstVal.dart';
 
 export '';
 
@@ -11,10 +12,15 @@ class Page1 extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _Page1State();
-
 }
 
 class _Page1State extends State<Page1> {
+  Widget goService(Widget child) {
+    return InkWell(
+      onTap: () => {Navigator.pushNamed(context, 'UserList')},
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +32,18 @@ class _Page1State extends State<Page1> {
               children: [
                 BaseCard(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "你好 客官",
-                        style: TextStyle(color: Colors.black, fontSize: 28),
+                        style: TextStyle(color: Colors.black, fontSize: 22.sp),
                       ),
                       Text(
                         "您今天要找什么？",
-                        style: TextStyle(color: Colors.black, fontSize: 28),
+                        style: TextStyle(color: Colors.black, fontSize: 28.sp),
                       ),
                       InkWell(
+                        // onTap: () => {Navigator.pushNamed(context, 'Search')},
                         onTap: () => {Navigator.pushNamed(context, 'Test')},
                         child: Container(
                           margin: const EdgeInsets.only(top: 10.0),
@@ -49,9 +57,9 @@ class _Page1State extends State<Page1> {
                             children: [
                               Expanded(
                                   child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 12.w, 0, 12.w),
-                                    child: Text("搜索您需要的服务"),
-                                  )),
+                                padding: EdgeInsets.fromLTRB(0, 12.w, 0, 12.w),
+                                child: Text("搜索您需要的服务"),
+                              )),
                               Image.asset(
                                 "images/like-red-small.png",
                                 width: 30.0,
@@ -70,22 +78,22 @@ class _Page1State extends State<Page1> {
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('1')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                       BaseIcon(
                         title: 'data1',
                         img: "images/gray-close-full.png",
-                        cb: () => {print('2')},
+                        cb: () => {Navigator.pushNamed(context, 'UserList')},
                       ),
                     ],
                   ),
@@ -101,18 +109,19 @@ class _Page1State extends State<Page1> {
                           InkWell(
                             onTap: () => {Navigator.pushNamed(context, 'Service')},
                             child: Container(
-                              padding: const EdgeInsets.all(6),
+                              padding: EdgeInsets.fromLTRB(10.w, 2.w, 4.w, 2.w),
                               decoration: BoxDecoration(
                                   color: const Color.fromRGBO(220, 220, 220, 1.0),
                                   borderRadius: BorderRadius.circular(18),
                                   border: Border.all(color: Colors.green)),
                               child: Row(
                                 children: [
-                                  const Text("上门服务"),
-                                  Image.asset(
-                                    'images/light-back.png',
-                                    width: 15,
-                                  )
+                                  Text("更多服务", style: descStyle),
+                                  Icon(
+                                    Icons.chevron_right_rounded,
+                                    size: 20.w,
+                                    color: Colors.grey,
+                                  ),
                                 ],
                               ),
                             ),
@@ -127,7 +136,7 @@ class _Page1State extends State<Page1> {
                               InkWell(
                                 onTap: () => {Navigator.pushNamed(context, 'UserList')},
                                 child: Padding(
-                                  padding: EdgeInsets.only(right: 10, top: 10),
+                                  padding: EdgeInsets.only(right: 10.w, top: 10.w),
                                   child: Column(
                                     children: [
                                       Stack(
@@ -148,16 +157,16 @@ class _Page1State extends State<Page1> {
                                               color: const Color.fromRGBO(222, 82, 82, 1.0),
                                               borderRadius: BorderRadius.circular(18),
                                             ),
-                                            child: const Text(
+                                            child: Text(
                                               "10%折扣",
-                                              style: TextStyle(color: Colors.white),
+                                              style: TextStyle(color: Colors.white, fontSize: 12.sp),
                                             ),
                                           ),
                                         ],
                                       ),
                                       const Padding(
                                         padding: EdgeInsets.only(top: 10),
-                                        child: Text("Hello world"),
+                                        child: Text("SPA"),
                                       ),
                                     ],
                                   ),
@@ -171,64 +180,59 @@ class _Page1State extends State<Page1> {
                 ),
                 BaseCard(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Gang("邀请"),
-                        Stack(
-                          children: [
-                            Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: Image.asset(
-                                'images/9.jpg',
-                                width: 100,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(padding: EdgeInsets.only(top: 6.w, bottom: 6.w), child: const Gang("邀请")),
+                    Row(children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.error_rounded,
+                                size: 18.w,
                               ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
+                              Container(
+                                margin: const EdgeInsets.only(left: 10),
+                                width: 200, //添加这一行
+                                child: const Text(
+                                  "邀请新用户可永久获得该好友后续消费费用的2%免费消费额度",
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "已收益1300元",
+                            style: TextStyle(fontSize: 22.sp),
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: InkWell(
+                                onTap: () => {print('邀请')},
+                                child: Row(
                                   children: [
-                                    Image.asset(
-                                      'images/light-back.png',
-                                      width: 10,
+                                    const Text(
+                                      "立即邀请",
+                                      style: TextStyle(fontSize: 20),
                                     ),
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      width: 200, //添加这一行
-                                      child: const Text(
-                                        "邀请新用户可永久获得该好友后续消费费用的2%免费消费额度",
-                                      ),
+                                    Icon(
+                                      Icons.chevron_right_rounded,
                                     ),
                                   ],
                                 ),
-                                const Text(
-                                  "已收益1300元",
-                                  style: TextStyle(fontSize: 30),
-                                ),
-                                Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    child: InkWell(
-                                      onTap: () => {print('邀请')},
-                                      child: Row(
-                                        children: [
-                                          const Text(
-                                            "立即邀请",
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          Image.asset(
-                                            'images/light-back.png',
-                                            width: 10,
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ))
+                              )),
+                        ],
+                      ),
+                      Image.asset(
+                        'images/9.jpg',
+                        width: 100.w,
+                      ),
+                    ])
+                  ],
+                ))
               ],
             )));
   }

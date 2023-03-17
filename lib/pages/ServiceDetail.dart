@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+class ServiceDetail extends StatefulWidget {
+  const ServiceDetail({super.key});
 
   @override
-  State<StatefulWidget> createState() => _TestPageState();
+  State<StatefulWidget> createState() => _ServiceDetailState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _ServiceDetailState extends State<ServiceDetail> {
   @override
   void initState() {
     super.initState();
@@ -18,7 +18,7 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Text("data");
+    return Text("ServiceDetail");
     // return const BasePage(child: SlideItem(index: 1,));
   }
 }

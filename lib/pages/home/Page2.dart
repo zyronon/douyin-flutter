@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:hope/model/args.dart';
 import 'package:hope/model/video.dart';
 import 'package:hope/model/woman.dart';
 import 'package:hope/pages/components/BaseScrollView.dart';
@@ -31,16 +33,24 @@ class _Page2 extends State<Page2> {
   }
 
   getData() async {
-    Dio dio = Dio();
-    var res = await dio.get("http://172.16.1.17:3000/slideList");
-    res.data = jsonDecode(res.data);
-    if (res.data['code'] == 200) {
+    // Dio dio = Dio();
+    // var res = await dio.get("http://172.16.1.17:3000/slideList");
+    // res.data = jsonDecode(res.data);
+    // if (res.data['code'] == 200) {
+    //   setState(() {
+    //     list = res.data['data'].asMap().entries.map<VideoModel>((entry) {
+    //       return VideoModel.fromRawJson(entry.value);
+    //     }).toList();
+    //   });
+    // }
+    rootBundle.loadString('assets/resource.json').then((data) {
+      Map<String, dynamic> map = jsonDecode(data);
       setState(() {
-        list = res.data['data'].asMap().entries.map<VideoModel>((entry) {
+        list = map['videos'].asMap().entries.map<VideoModel>((entry) {
           return VideoModel.fromRawJson(entry.value);
         }).toList();
       });
-    }
+    });
   }
 
   @override
@@ -78,10 +88,8 @@ class _Page2 extends State<Page2> {
             ],
           ),
           Expanded(
-              child: BaseScrollView(
-                  child: TabBarView(
+              child: TabBarView(
             children: [
-              Icon(Icons.directions_boat),
               MasonryGridView.count(
                 padding: EdgeInsets.all(4.w),
                 crossAxisCount: crossAxisCount,
@@ -91,18 +99,20 @@ class _Page2 extends State<Page2> {
                   if (index == list.length - 1) {
                     getData();
                   }
-                  return PreviewCard(
-                    index: index,
-                    item: list[index],
-                    width: 100,
-                    height: 300,
+                  return InkWell(
+                    onTap: () => {Navigator.pushNamed(context, 'SlideList', arguments: SlideListArguments(list, index))},
+                    child: PreviewCard(
+                      index: index,
+                      item: list[index],
+                    ),
                   );
                 },
                 itemCount: list.length,
               ),
-              Icon(Icons.directions_car),
+              const Icon(Icons.directions_boat),
+              const Icon(Icons.directions_car),
             ],
-          )))
+          ))
         ],
       ),
     );

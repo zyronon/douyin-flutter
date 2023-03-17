@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hope/pages/components/BaseScrollView.dart';
 import 'package:hope/utils/ConstVal.dart';
 
 export '';
@@ -32,7 +33,9 @@ class _BasePage extends State<BasePage> {
                 // color: Color.fromRGBO(15, 22, 33, 1),
                 color: mainBgColor2,
               ),
-              child: widget.child,
+              child: BaseScrollView(
+                child: widget.child,
+              ),
             )));
   }
 }

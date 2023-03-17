@@ -8,14 +8,14 @@ class BaseIcon extends StatelessWidget {
     super.key,
     required this.title,
     required this.img,
-    required this.cb,
+    this.cb,
     this.flex = 1,
   });
 
   final String title;
   final String img;
   final int flex;
-  final void Function() cb;
+  final void Function()? cb;
 
   @override
   Widget build(BuildContext context) {

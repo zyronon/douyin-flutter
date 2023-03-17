@@ -108,22 +108,18 @@ class _MeState extends State<Me> {
                         BaseIcon(
                           title: '设置',
                           img: "images/gray-close-full.png",
-                          cb: () => {print('1')},
                         ),
                         BaseIcon(
                           title: '联系客服',
                           img: "images/gray-close-full.png",
-                          cb: () => {print('2')},
                         ),
                         BaseIcon(
                           title: '地址管理',
                           img: "images/gray-close-full.png",
-                          cb: () => {print('2')},
                         ),
                         BaseIcon(
                           title: '投诉管理',
                           img: "images/gray-close-full.png",
-                          cb: () => {print('2')},
                         ),
                       ],
                     ),

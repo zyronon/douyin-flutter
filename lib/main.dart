@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'pages/Home/index.dart';
 import 'pages/Login.dart';
+import 'pages/ServiceDetail.dart';
 import 'pages/order/OrderDetail.dart';
 import 'pages/order/PlaceOrder.dart';
 import 'pages/PrivacyPolicy.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
               'PrivacyPolicy': (context) => const PrivacyPolicy(),
               'Search': (context) => const Search(),
               'Service': (context) => const Service(),
+              'ServiceDetail': (context) => const ServiceDetail(),
               'SlideList': (context) => const SlideList(),
               'UserPanel': (context) => const UserPanel(),
               'Test': (context) => const TestPage(),

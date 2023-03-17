@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
+import 'package:bruno/bruno.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hope/model/woman.dart';
 import 'package:hope/pages/components/BasePage.dart';
+import 'package:hope/utils/SliverHeaderDelegate.dart';
 import '../../utils/ConstVal.dart';
+import 'components/BaseCard.dart';
+import 'components/BaseScrollView.dart';
 
 export '';
 
@@ -20,12 +26,99 @@ class UserList extends StatefulWidget {
 
 class _UserList extends State<UserList> {
   List<Woman> list = [];
+  List<BrnSelectionEntity>? items;
+  List<BrnSelectionEntity> filterData = [];
 
-  card(Woman item) {
+  getData() async {
+    // Dio dio = Dio();
+    // var res = await dio.get("http://172.16.1.17:3000/userList");
+    // res.data = jsonDecode(res.data);
+    // if (res.data['code'] == 200) {
+    //   setState(() {
+    //     list = res.data['data'].map<Woman>((i) => Woman.fromJson(i)).toList();
+    //   });
+    // }
+    rootBundle.loadString('assets/multi_list_filter.json').then((data) {
+      setState(() {
+        filterData = BrnSelectionEntityListBean.fromJson(const JsonDecoder().convert(data)["data"])!.list!;
+      });
+    });
+    rootBundle.loadString('assets/userList.json').then((data) {
+      Map<String, dynamic> map = jsonDecode(data);
+      setState(() {
+        list = map['data'].map<Woman>((i) => Woman.fromJson(i)).toList();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Widget floatHeader() {
+    return SliverPersistentHeader(
+      pinned: false,
+      floating: true,
+      delegate: SliverHeaderDelegate.fixedHeight(
+        height: 50.w,
+        child: Container(
+          color: Colors.white,
+          height: headerHeight + 10.w,
+          padding: EdgeInsets.only(left: 8.w),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () => {Navigator.pop(context)},
+                child: SizedBox(
+                  width: headerHeight,
+                  height: headerHeight,
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                      size: 18.w,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                  child: BrnSearchText(
+                      maxHeight: 50.w,
+                      innerPadding: EdgeInsets.only(left: 0.w, right: 10.w, top: 6.w, bottom: 6.w),
+                      innerColor: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20.w)),
+                      normalBorder: Border.all(color: const Color(0xFFF0F0F0), width: 1, style: BorderStyle.solid),
+                      // activeBorder: Border.all(color: Color(0xFF0984F9), width: 1, style: BorderStyle.solid),
+                      autoFocus: false)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget fixedSort() {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: SliverHeaderDelegate.fixedHeight(
+          //固定高度
+          height: 40.w,
+          child: BrnSelectionView(
+              originalSelectionData: filterData,
+              onSelectionChanged: (int menuIndex, Map<String, String> filterParams, Map<String, String> customParams,
+                  BrnSetCustomSelectionMenuTitle setCustomTitleFunction) {
+                BrnToast.show(filterParams.toString(), context);
+              })),
+    );
+  }
+
+  Widget userCard(Woman item) {
     return InkWell(
         onTap: () => {Navigator.pushNamed(context, 'UserPanel')},
         child: Container(
-            margin: EdgeInsets.only(bottom: 18.w),
+            margin: EdgeInsets.only(bottom: 8.w),
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.w),
@@ -126,70 +219,29 @@ class _UserList extends State<UserList> {
             )));
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
-  getData() async {
-    Dio dio = Dio();
-    var res = await dio.get("http://172.16.1.17:3000/");
-    res.data = jsonDecode(res.data);
-    if (res.data['code'] == 200) {
-      setState(() {
-        list = res.data['data'].map<Woman>((i) => Woman.fromJson(i)).toList();
-      });
-    }
+  Widget userList() {
+    return SliverPadding(
+      padding: EdgeInsets.all(12.w),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return userCard(list[index]);
+          },
+          childCount: list.length,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return BasePage(
-        child: Column(children: [
-      Container(
-        padding: EdgeInsets.all(8.w),
-        child: Container(
-          height: 36.w,
-          padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
-                    hintText: '搜索您需要的服务',
-                    hintStyle: TextStyle(color: Color.fromRGBO(64, 69, 82, 1)),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              Image.asset(
-                "images/like-red-small.png",
-                width: 25.w,
-              )
-            ],
-          ),
-        ),
-      ),
-      SizedBox(
-        //Material设计规范中状态栏、导航栏、ListTile高度分别为24、56、56
-        height: MediaQuery.of(context).size.height - 24 - 56 - 136.w,
-        child: Container(
-          padding: EdgeInsets.all(8.w),
-          // decoration: BoxDecoration(border: Border.all(color: Colors.green)),
-          child: ListView.builder(
-              padding: const EdgeInsets.all(0),
-              itemCount: list.length,
-              itemBuilder: (BuildContext context, int index) {
-                return card(list[index]);
-              }),
-        ),
-      ),
-    ]));
+        child: CustomScrollView(
+      slivers: [
+        floatHeader(),
+        if (filterData.isNotEmpty) fixedSort(),
+        userList(),
+      ],
+    ));
   }
 }
