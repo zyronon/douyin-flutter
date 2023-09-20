@@ -28,6 +28,7 @@ class _SlideListState extends State<SlideList> {
     // getData();
   }
 
+
   @override
   void dispose() {
     _pageController.dispose();

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:hope/pages/components/BaseScrollView.dart';
 import 'package:hope/pages/components/ExpandableText/expandable_text.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +86,15 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
     animController.dispose();
     videoController.dispose();
     EventBus.off("slideListPageChanged", slideListPageChanged);
+  }
+
+  void goUserPanel() {
+    if (showDesc) {
+      Timer(const Duration(seconds: 1), () {
+        videoController.pause();
+      });
+      Navigator.pushNamed(context, 'UserPanel').then((value) => {videoController.play()});
+    }
   }
 
   Widget loadingIcon() {
@@ -519,7 +530,7 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             InkWell(
-                                              onTap: () => {if (showDesc) Navigator.pushNamed(context, 'UserPanel')},
+                                              onTap: goUserPanel,
                                               child: Row(
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
