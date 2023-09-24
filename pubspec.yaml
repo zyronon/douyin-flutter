@@ -38,12 +38,12 @@ dependencies:
   json_annotation: ^4.8.0
   shared_preferences: ^2.0.17
   video_player: ^2.5.2
-  flutter_screenutil: ^5.6.1
+  flutter_screenutil: 5.6.1
   agora_rtc_engine: ^6.1.0
   permission_handler: ^10.2.0
   flutter_staggered_grid_view: ^0.6.2
   expandable_text: ^2.3.0
-  bruno: ^3.3.0
+  bruno: 3.3.0
 
 dev_dependencies:
   flutter_test:

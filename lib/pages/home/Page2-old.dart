@@ -87,18 +87,30 @@ class _Page2 extends State<Page2> {
               )
             ],
           ),
-          const Expanded(
+          Expanded(
               child: TabBarView(
             children: [
-              TabBarView(
-                children: [
-                  Text('1'),
-                  Text('2'),
-                  Text('3'),
-                ],
+              MasonryGridView.count(
+                padding: EdgeInsets.all(4.w),
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: 4.w,
+                crossAxisSpacing: 4.w,
+                itemBuilder: (context, index) {
+                  if (index == list.length - 1) {
+                    getData();
+                  }
+                  return InkWell(
+                    onTap: () => {Navigator.pushNamed(context, 'SlideList', arguments: SlideListArguments(list, index))},
+                    child: PreviewCard(
+                      index: index,
+                      item: list[index],
+                    ),
+                  );
+                },
+                itemCount: list.length,
               ),
-              Text('5'),
-              Text('5'),
+              const Icon(Icons.directions_boat),
+              const Icon(Icons.directions_car),
             ],
           ))
         ],
