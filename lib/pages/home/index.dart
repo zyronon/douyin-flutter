@@ -22,13 +22,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
   double stateHeight = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     Page1(),
     Page2(),
-    Page3(),
     Page4(),
     // SlideItem(),
     // Text("Page4"),
@@ -78,10 +77,6 @@ class _HomeState extends State<Home> {
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: '海选',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: '聊天',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

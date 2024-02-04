@@ -14,7 +14,12 @@ import 'dart:math' as math;
 export '';
 
 class SlideItem extends StatefulWidget {
-  const SlideItem({Key? key, required this.videoModel, required this.index, required this.isPlay}) : super(key: key);
+  const SlideItem(
+      {Key? key,
+      required this.videoModel,
+      required this.index,
+      required this.isPlay})
+      : super(key: key);
 
   final VideoModel videoModel;
   final int index;
@@ -73,7 +78,9 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
     videoController.setLooping(true);
     videoController.addListener(() {
       setState(() {
-        _sliderValue = (videoController.value.position.inSeconds / videoController.value.duration.inSeconds) * 100;
+        _sliderValue = (videoController.value.position.inSeconds /
+                videoController.value.duration.inSeconds) *
+            100;
         isBuffering = videoController.value.isBuffering;
       });
     });
@@ -93,7 +100,8 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
       Timer(const Duration(seconds: 1), () {
         videoController.pause();
       });
-      Navigator.pushNamed(context, 'UserPanel').then((value) => {videoController.play()});
+      Navigator.pushNamed(context, 'UserPanel')
+          .then((value) => {videoController.play()});
     }
   }
 
@@ -133,7 +141,8 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
   Widget _comments() {
     return Container(
       clipBehavior: Clip.antiAlias,
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -151,7 +160,8 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
               Center(
                 child: Text(
                   '底部弹窗',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
                 ),
               ),
               IconButton(
@@ -197,12 +207,17 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                     children: [
                                       Text("顺德JacksonGao", style: descStyle),
                                       Text.rich(TextSpan(children: [
-                                        TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                        TextSpan(text: " 03-02 广东", style: timeStyle),
+                                        TextSpan(
+                                            text:
+                                                "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                        TextSpan(
+                                            text: " 03-02 广东",
+                                            style: timeStyle),
                                       ]))
                                       // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
                                     ],
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                   )),
                                   Column(children: [
                                     Icon(
@@ -236,12 +251,17 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                       children: [
                                         Text("顺德JacksonGao", style: descStyle),
                                         Text.rich(TextSpan(children: [
-                                          TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                          TextSpan(text: " 03-02 广东", style: timeStyle),
+                                          TextSpan(
+                                              text:
+                                                  "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                          TextSpan(
+                                              text: " 03-02 广东",
+                                              style: timeStyle),
                                         ]))
                                         // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
                                       ],
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                     )),
                                     Column(children: [
                                       Icon(
@@ -278,12 +298,17 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                       children: [
                                         Text("顺德JacksonGao", style: descStyle),
                                         Text.rich(TextSpan(children: [
-                                          TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                          TextSpan(text: " 03-02 广东", style: timeStyle),
+                                          TextSpan(
+                                              text:
+                                                  "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                          TextSpan(
+                                              text: " 03-02 广东",
+                                              style: timeStyle),
                                         ]))
                                         // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
                                       ],
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                     )),
                                     Column(children: [
                                       Icon(
@@ -320,12 +345,17 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                       children: [
                                         Text("顺德JacksonGao", style: descStyle),
                                         Text.rich(TextSpan(children: [
-                                          TextSpan(text: "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
-                                          TextSpan(text: " 03-02 广东", style: timeStyle),
+                                          TextSpan(
+                                              text:
+                                                  "顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao"),
+                                          TextSpan(
+                                              text: " 03-02 广东",
+                                              style: timeStyle),
                                         ]))
                                         // Expanded(child: Text("顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao顺德JacksonGao")),
                                       ],
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                     )),
                                     Column(children: [
                                       Icon(
@@ -347,8 +377,11 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                               padding: EdgeInsets.only(bottom: 8.w),
                               child: Text(
                                 "展开6条回复",
-                                style:
-                                    TextStyle(color: const Color.fromRGBO(35, 85, 155, 1.0), fontWeight: FontWeight.bold, fontSize: 14.sp),
+                                style: TextStyle(
+                                    color:
+                                        const Color.fromRGBO(35, 85, 155, 1.0),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp),
                               ),
                             ),
                           ),
@@ -382,18 +415,24 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                       ),
                     ),
                     padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
-                    decoration: BoxDecoration(color: mainBgColor2, borderRadius: BorderRadius.all(Radius.circular(18.w))),
+                    decoration: BoxDecoration(
+                        color: mainBgColor2,
+                        borderRadius: BorderRadius.all(Radius.circular(18.w))),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 8.w),
                   child: InkWell(
                     child: Container(
-                        decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(18.w))),
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(18.w))),
                         padding: EdgeInsets.fromLTRB(14.w, 10.w, 14.w, 10.w),
                         child: Text(
                           "发送",
-                          style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 14.sp),
                         )),
                   ),
                 )
@@ -424,7 +463,8 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
       transitionAnimationController: animController,
       builder: (BuildContext context) {
         return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Padding(
               padding: EdgeInsets.all(14.w),
               child: Row(
@@ -432,7 +472,10 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.fromLTRB(10.w, 0.w, 10.w, 0.w),
-                      decoration: BoxDecoration(color: mainBgColor2, borderRadius: BorderRadius.all(Radius.circular(18.w))),
+                      decoration: BoxDecoration(
+                          color: mainBgColor2,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(18.w))),
                       child: SizedBox(
                         height: 40.w,
                         child: const TextField(
@@ -451,11 +494,15 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                     padding: EdgeInsets.only(left: 8.w),
                     child: InkWell(
                       child: Container(
-                          decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.all(Radius.circular(18.w))),
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(18.w))),
                           padding: EdgeInsets.fromLTRB(14.w, 10.w, 14.w, 10.w),
                           child: Text(
                             "发送",
-                            style: TextStyle(color: Colors.white, fontSize: 14.sp),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 14.sp),
                           )),
                     ),
                   )
@@ -480,7 +527,9 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        videoController.value.isPlaying ? videoController.pause() : videoController.play();
+                        videoController.value.isPlaying
+                            ? videoController.pause()
+                            : videoController.play();
                       });
                     },
                     child: Center(
@@ -494,6 +543,7 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                   ),
                   statusIcon(),
                   const BaseHeader(),
+                  //背景mark
                   Offstage(
                       offstage: !openDesc,
                       child: AnimatedOpacity(
@@ -504,7 +554,8 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                               _textKey.currentState?.linkTapped();
                             },
                             child: Container(
-                              decoration: BoxDecoration(color: Color.fromRGBO(0, 0, 0, .5)),
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(0, 0, 0, .5)),
                             ),
                           ))),
                   Visibility(visible: isBuffering, child: loadingIcon()),
@@ -525,34 +576,45 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                 Expanded(
                                     child: AnimatedOpacity(
                                         opacity: showDesc ? 1 : 0,
-                                        duration: const Duration(milliseconds: 300),
+                                        duration:
+                                            const Duration(milliseconds: 300),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             InkWell(
                                               onTap: goUserPanel,
                                               child: Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   CircleAvatar(
                                                     maxRadius: 18.w,
-                                                    backgroundImage: NetworkImage(url),
+                                                    backgroundImage:
+                                                        NetworkImage(url),
                                                   ),
                                                   Padding(
-                                                    padding: EdgeInsets.only(left: 8.w),
+                                                    padding: EdgeInsets.only(
+                                                        left: 8.w),
                                                     child: Text(
-                                                      widget.videoModel.author!.nickname!,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                                                      widget.videoModel.author!
+                                                          .nickname!,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontSize: 16.sp,
+                                                          color: Colors.white),
                                                     ),
                                                   )
                                                 ],
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsets.only(top: 8.w),
+                                              padding:
+                                                  EdgeInsets.only(top: 8.w),
                                               child: ExpandableText(
-                                                animationDuration: Duration(milliseconds: 600),
+                                                animationDuration:
+                                                    Duration(milliseconds: 600),
                                                 key: _textKey,
                                                 expanded: openDesc,
                                                 widget.videoModel.desc!,
@@ -563,10 +625,13 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                                 collapseOnTextTap: true,
                                                 expandOnTextTap: true,
                                                 linkColor: Colors.grey,
-                                                onExpandedChanged: (value) => setState(() {
+                                                onExpandedChanged: (value) =>
+                                                    setState(() {
                                                   openDesc = value;
                                                 }),
-                                                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+                                                style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    color: Colors.white),
                                               ),
                                             )
                                           ],
@@ -574,16 +639,22 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                 Visibility(
                                     visible: !openDesc,
                                     child: InkWell(
-                                      onTap: () => setState(() => showDesc = !showDesc),
+                                      onTap: () =>
+                                          setState(() => showDesc = !showDesc),
                                       child: Container(
                                         margin: EdgeInsets.only(left: 8.w),
                                         padding: EdgeInsets.all(6.w),
                                         decoration: const BoxDecoration(
-                                            color: Color.fromRGBO(43, 43, 43, 0.8), borderRadius: BorderRadius.all(Radius.circular(100))),
+                                            color:
+                                                Color.fromRGBO(43, 43, 43, 0.8),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100))),
                                         child: Transform.rotate(
                                           angle: math.pi / 4,
                                           child: Icon(
-                                            showDesc ? Icons.unfold_more_sharp : Icons.unfold_less_sharp,
+                                            showDesc
+                                                ? Icons.unfold_more_sharp
+                                                : Icons.unfold_less_sharp,
                                             color: Colors.white,
                                             size: 18.w,
                                           ),
@@ -598,7 +669,8 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                   padding: EdgeInsets.only(top: 8.w),
                                   child: Text(
                                     "2021-03-01",
-                                    style: TextStyle(color: Colors.grey, fontSize: 12.sp),
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 12.sp),
                                   )),
                             ),
                           ],
@@ -615,11 +687,14 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                           //trackHeight：滑轨的高度
                           trackHeight: isDragProgress ? 2 : 1,
                           //已滑过轨道的颜色
-                          activeTrackColor: isDragProgress ? Colors.white : Colors.white30,
+                          activeTrackColor:
+                              isDragProgress ? Colors.white : Colors.white30,
                           //未滑过轨道的颜色
                           inactiveTrackColor: Colors.white30,
                           //滑块中心的颜色（小圆头的颜色）
-                          thumbColor: isDragProgress ? Colors.white : Colors.transparent,
+                          thumbColor: isDragProgress
+                              ? Colors.white
+                              : Colors.transparent,
                           //滑块边缘的颜色
                           overlayColor: Colors.white,
                           thumbShape: RoundSliderThumbShape(
@@ -638,8 +713,12 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                           min: 0,
                           onChanged: (double val) {
                             setState(() {
-                              int currentTime = (videoPlayerValue.duration.inSeconds * (val / 100)).toInt();
-                              videoController.seekTo(Duration(seconds: currentTime));
+                              int currentTime =
+                                  (videoPlayerValue.duration.inSeconds *
+                                          (val / 100))
+                                      .toInt();
+                              videoController
+                                  .seekTo(Duration(seconds: currentTime));
                               _sliderValue = val;
                             });
                           },
@@ -654,27 +733,101 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                             });
                           },
                         ),
-                      ))
+                      )),
+                  Positioned(
+                      bottom: 20.h,
+                      right: 20.w,
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        spacing: 20.h,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: goUserPanel,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  maxRadius: 26.w,
+                                  backgroundImage: NetworkImage(url),
+                                ),
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => setState(() => isLove = !isLove),
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 8.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    isLove
+                                        ? Icon(
+                                            Icons.favorite_sharp,
+                                            color: Colors.red,
+                                            size: 40.sp,
+                                          )
+                                        : Icon(
+                                            Icons.favorite_border_sharp,
+                                            color: Colors.white,
+                                            size: 40.sp,
+                                          ),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text("13万"))
+                                  ],
+                                )),
+                          ),
+                          InkWell(
+                            onTap: () => setState(() => isCollect = !isCollect),
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 8.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    isCollect
+                                        ? Icon(
+                                            Icons.star_rounded,
+                                            color: Colors.yellow,
+                                            size: 40.sp,
+                                          )
+                                        : Icon(
+                                            Icons.star_border_rounded,
+                                            color: Colors.white,
+                                            size: 40.sp,
+                                          ),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text("13万"))
+                                  ],
+                                )),
+                          ),
+                          InkWell(
+                            onTap: openComment,
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 8.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.textsms_outlined,
+                                      color: Colors.white,
+                                      size: 40.sp,
+                                    ),
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text("13万"))
+                                  ],
+                                )),
+                          ),
+                        ],
+                      )),
                 ],
               )),
               Padding(
                   padding: EdgeInsets.all(14.w),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: quickComment,
-                          child: Container(
-                            child: Text(
-                              '发表评论',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            padding: EdgeInsets.fromLTRB(20.w, 8.w, 20.w, 8.w),
-                            decoration:
-                                BoxDecoration(color: Color.fromRGBO(43, 43, 43, 1), borderRadius: BorderRadius.all(Radius.circular(18.w))),
-                          ),
-                        ),
-                      ),
                       Row(
                         children: [
                           InkWell(
@@ -695,7 +848,9 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                             color: Colors.white,
                                             size: 28.sp,
                                           ),
-                                    Padding(padding: EdgeInsets.only(left: 4.w), child: Text("13万"))
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text("13万"))
                                   ],
                                 )),
                           ),
@@ -717,7 +872,9 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                             color: Colors.white,
                                             size: 28.sp,
                                           ),
-                                    Padding(padding: EdgeInsets.only(left: 4.w), child: Text("13万"))
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text("13万"))
                                   ],
                                 )),
                           ),
@@ -733,7 +890,9 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                       color: Colors.white,
                                       size: 28.sp,
                                     ),
-                                    Padding(padding: EdgeInsets.only(left: 4.w), child: Text("13万"))
+                                    Padding(
+                                        padding: EdgeInsets.only(left: 4.w),
+                                        child: Text("13万"))
                                   ],
                                 )),
                           ),
