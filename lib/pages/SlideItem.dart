@@ -751,6 +751,11 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                                   maxRadius: 26.w,
                                   backgroundImage: NetworkImage(url),
                                 ),
+                                Icon(
+                                  Icons.plus_one,
+                                  color: Colors.white,
+                                  size: 20.sp,
+                                )
                               ],
                             ),
                           ),
@@ -824,82 +829,6 @@ class _SlideItemState extends State<SlideItem> with TickerProviderStateMixin {
                       )),
                 ],
               )),
-              Padding(
-                  padding: EdgeInsets.all(14.w),
-                  child: Row(
-                    children: [
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () => setState(() => isLove = !isLove),
-                            child: Padding(
-                                padding: EdgeInsets.only(left: 8.w),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    isLove
-                                        ? Icon(
-                                            Icons.favorite_sharp,
-                                            color: Colors.red,
-                                            size: 28.sp,
-                                          )
-                                        : Icon(
-                                            Icons.favorite_border_sharp,
-                                            color: Colors.white,
-                                            size: 28.sp,
-                                          ),
-                                    Padding(
-                                        padding: EdgeInsets.only(left: 4.w),
-                                        child: Text("13万"))
-                                  ],
-                                )),
-                          ),
-                          InkWell(
-                            onTap: () => setState(() => isCollect = !isCollect),
-                            child: Padding(
-                                padding: EdgeInsets.only(left: 8.w),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    isCollect
-                                        ? Icon(
-                                            Icons.star_rounded,
-                                            color: Colors.yellow,
-                                            size: 28.sp,
-                                          )
-                                        : Icon(
-                                            Icons.star_border_rounded,
-                                            color: Colors.white,
-                                            size: 28.sp,
-                                          ),
-                                    Padding(
-                                        padding: EdgeInsets.only(left: 4.w),
-                                        child: Text("13万"))
-                                  ],
-                                )),
-                          ),
-                          InkWell(
-                            onTap: openComment,
-                            child: Padding(
-                                padding: EdgeInsets.only(left: 8.w),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.textsms_outlined,
-                                      color: Colors.white,
-                                      size: 28.sp,
-                                    ),
-                                    Padding(
-                                        padding: EdgeInsets.only(left: 4.w),
-                                        child: Text("13万"))
-                                  ],
-                                )),
-                          ),
-                        ],
-                      )
-                    ],
-                  ))
             ],
           )),
     );
