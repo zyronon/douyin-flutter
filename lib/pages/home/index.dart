@@ -22,7 +22,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
   double stateHeight = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
